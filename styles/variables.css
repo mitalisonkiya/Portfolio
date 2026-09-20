@@ -1,0 +1,91 @@
+/* ==========================================================================
+   PREMIUM CREATIVE AGENCY DESIGN TOKENS & 3D PARALLAX SYSTEM
+   ========================================================================== */
+
+:root {
+  /* Light Theme - Paper Luxury & Editorial Forest */
+  --bg-color: #F4F5F0;              /* Soft alabaster paper */
+  --bg-color-rgb: 244, 245, 240;
+  --bg-surface: #FFFFFF;            /* Pure card surface */
+  --bg-surface-glass: rgba(255, 255, 255, 0.72);
+  --bg-surface-subtle: #E8EAE1;     /* Subtle contrast */
+  --bg-dot: rgba(18, 24, 21, 0.07); /* Low-contrast dot grid */
+  
+  --text-main: #121815;             /* Deep obsidian forest */
+  --text-muted: #526056;            /* Refined secondary */
+  --text-tertiary: #7D8E83;         /* Editorial caption */
+  
+  --border-color: #DBDFD2;          /* 1px hairline border */
+  --border-hover: #121815;          /* Crisp active border */
+  --border-glass: rgba(255, 255, 255, 0.65);
+  
+  --accent: #4338CA;                /* Electric Royal Indigo */
+  --accent-light: #6366F1;
+  --accent-subtle: rgba(67, 56, 202, 0.08);
+  --accent-glow: rgba(67, 56, 202, 0.22);
+
+  --status-emerald: #059669;
+  --status-emerald-pulse: rgba(5, 150, 105, 0.35);
+
+  /* Portrait & Glow Elements */
+  --portrait-aura-1: rgba(67, 56, 202, 0.28);
+  --portrait-aura-2: rgba(236, 72, 153, 0.22);
+  --portrait-aura-3: rgba(14, 165, 233, 0.25);
+  --portrait-ring: rgba(67, 56, 202, 0.25);
+  --portrait-sheen: rgba(255, 255, 255, 0.55);
+  --card-glass-specular: rgba(255, 255, 255, 0.85);
+
+  /* Typography */
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-sans: 'Manrope', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  /* Sizing & Radius */
+  --container-width: 1040px;
+  --radius-xs: 4px;
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-full: 9999px;
+
+  /* Smooth Spring Transitions */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out-circ: cubic-bezier(0.85, 0, 0.15, 1);
+  --transition-fast: 0.18s var(--ease-out-expo);
+  --transition-smooth: 0.35s var(--ease-out-expo);
+  --transition-slow: 0.65s var(--ease-out-expo);
+}
+
+/* Dark Theme - Obsidian Titanium & Luminous Silver */
+[data-theme="dark"] {
+  --bg-color: #0D1113;              /* Titanium Obsidian */
+  --bg-color-rgb: 13, 17, 19;
+  --bg-surface: #151A1D;            /* Deep surface */
+  --bg-surface-glass: rgba(21, 26, 29, 0.75);
+  --bg-surface-subtle: #1E2529;
+  --bg-dot: rgba(255, 255, 255, 0.05);
+
+  --text-main: #F1F5F2;             /* Luminous light text */
+  --text-muted: #9AA89E;
+  --text-tertiary: #67756B;
+
+  --border-color: #242D32;
+  --border-hover: #F1F5F2;
+  --border-glass: rgba(255, 255, 255, 0.12);
+
+  --accent: #818CF8;                /* Electric Indigo Light */
+  --accent-light: #A5B4FC;
+  --accent-subtle: rgba(129, 140, 248, 0.12);
+  --accent-glow: rgba(129, 140, 248, 0.3);
+
+  --status-emerald: #34D399;
+  --status-emerald-pulse: rgba(52, 211, 153, 0.4);
+
+  /* Dark Portrait Auras */
+  --portrait-aura-1: rgba(129, 140, 248, 0.35);
+  --portrait-aura-2: rgba(244, 114, 182, 0.28);
+  --portrait-aura-3: rgba(56, 189, 248, 0.3);
+  --portrait-ring: rgba(129, 140, 248, 0.35);
+  --portrait-sheen: rgba(255, 255, 255, 0.25);
+  --card-glass-specular: rgba(255, 255, 255, 0.15);
+}

@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TaskFlow - Minimalist Todo & Productivity Hub</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --bg-dark: #090e17;
+      --card-bg: rgba(23, 31, 48, 0.8);
+      --card-border: rgba(255, 255, 255, 0.08);
+      --purple: #8b5cf6;
+      --cyan: #06b6d4;
+      --green: #10b981;
+      --text: #f1f5f9;
+      --text-muted: #94a3b8;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
+    body { background: var(--bg-dark); color: var(--text); padding: 1.5rem; min-height: 100vh; overflow-x: hidden; }
+    .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem; }
+    .logo { display: flex; align-items: center; gap: 0.75rem; font-family: 'Outfit', sans-serif; font-size: 1.5rem; font-weight: 800; color: #fff; }
+    .logo-icon { width: 36px; height: 36px; background: linear-gradient(135deg, var(--purple), var(--cyan)); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 1.1rem; }
+    
+    .stats-bar { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; margin-bottom: 1.5rem; }
+    .stat-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 14px; padding: 1rem 1.25rem; display: flex; align-items: center; justify-content: space-between; }
+    .stat-card strong { font-size: 1.5rem; color: #fff; font-family: 'Outfit'; }
+    
+    .main-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; }
+    @media (max-width: 850px) { .main-grid { grid-template-columns: 1fr; } }
+    
+    .column { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 16px; padding: 1.25rem; display: flex; flex-direction: column; gap: 0.85rem; min-height: 420px; }
+    .column-header { display: flex; justify-content: space-between; align-items: center; padding-bottom: 0.75rem; border-bottom: 1px solid var(--card-border); font-weight: 700; font-size: 0.95rem; }
+    .col-badge { background: rgba(255,255,255,0.08); padding: 2px 8px; border-radius: 999px; font-size: 0.75rem; color: var(--cyan); }
+    
+    .task-card { background: rgba(15, 23, 42, 0.7); border: 1px solid var(--card-border); border-radius: 12px; padding: 0.9rem; transition: transform 0.2s, border-color 0.2s; cursor: grab; }
+    .task-card:hover { border-color: rgba(139, 92, 246, 0.4); transform: translateY(-2px); }
+    .task-title { font-weight: 600; font-size: 0.9rem; color: #fff; margin-bottom: 0.5rem; }
+    .task-meta { display: flex; justify-content: space-between; align-items: center; font-size: 0.75rem; }
+    .tag { padding: 2px 8px; border-radius: 6px; font-weight: 600; font-size: 0.7rem; }
+    .tag-work { background: rgba(6, 182, 212, 0.15); color: #22d3ee; }
+    .tag-urgent { background: rgba(239, 68, 68, 0.15); color: #f87171; }
+    .tag-personal { background: rgba(139, 92, 246, 0.15); color: #c084fc; }
+
+    .input-bar { display: flex; gap: 0.5rem; margin-bottom: 1.5rem; }
+    .task-input { flex: 1; background: rgba(15, 23, 42, 0.8); border: 1px solid var(--card-border); border-radius: 10px; padding: 0.75rem 1rem; color: #fff; outline: none; font-size: 0.95rem; }
+    .task-input:focus { border-color: var(--purple); }
+    .add-btn { background: linear-gradient(135deg, var(--purple), var(--cyan)); color: #fff; border: none; padding: 0.75rem 1.25rem; border-radius: 10px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 0.5rem; transition: 0.2s; }
+    .add-btn:hover { opacity: 0.9; transform: translateY(-2px); }
+    .task-actions { display: flex; gap: 0.35rem; margin-top: 0.6rem; padding-top: 0.5rem; border-top: 1px solid rgba(255,255,255,0.05); }
+    .action-btn { background: transparent; border: none; color: var(--text-muted); cursor: pointer; font-size: 0.75rem; padding: 2px 6px; border-radius: 4px; transition: 0.2s; }
+    .action-btn:hover { color: #fff; background: rgba(255,255,255,0.1); }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="logo">
+      <div class="logo-icon"><i class="fa-solid fa-list-check"></i></div>
+      <span>TaskFlow Todo</span>
+    </div>
+    <div style="font-size: 0.85rem; color: var(--text-muted);">
+      <i class="fa-solid fa-bolt" style="color: var(--cyan);"></i> Smart Interactive Kanban & Task Organizer
+    </div>
+  </div>
+
+  <div class="stats-bar">
+    <div class="stat-card">
+      <div>
+        <div style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase;">Total Tasks</div>
+        <strong id="totalTasksCount">6</strong>
+      </div>
+      <i class="fa-solid fa-layer-group" style="color: var(--purple); font-size: 1.5rem;"></i>
+    </div>
+    <div class="stat-card">
+      <div>
+        <div style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase;">In Progress</div>
+        <strong id="inProgCount" style="color: var(--cyan);">2</strong>
+      </div>
+      <i class="fa-solid fa-spinner" style="color: var(--cyan); font-size: 1.5rem;"></i>
+    </div>
+    <div class="stat-card">
+      <div>
+        <div style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase;">Completed</div>
+        <strong id="doneCount" style="color: var(--green);">2</strong>
+      </div>
+      <i class="fa-solid fa-circle-check" style="color: var(--green); font-size: 1.5rem;"></i>
+    </div>
+  </div>
+
+  <!-- Input Bar -->
+  <form class="input-bar" onsubmit="handleAddTask(event)">
+    <input type="text" id="newTaskTitle" class="task-input" placeholder="Create a new task, press Enter..." required />
+    <select id="newTaskTag" class="task-input" style="flex: 0 0 140px;">
+      <option value="Work">💼 Work</option>
+      <option value="Urgent">🔥 Urgent</option>
+      <option value="Personal">✨ Personal</option>
+    </select>
+    <button type="submit" class="add-btn"><i class="fa-solid fa-plus"></i> Add</button>
+  </form>
+
+  <div class="main-grid">
+    <!-- Column 1: Backlog -->
+    <div class="column" id="col-backlog">
+      <div class="column-header">
+        <span><i class="fa-solid fa-circle" style="color: #64748b; font-size: 0.6rem;"></i> Backlog</span>
+        <span class="col-badge" id="badge-backlog">2</span>
+      </div>
+      <div class="task-list" id="list-backlog">
+        <div class="task-card" data-id="1">
+          <div class="task-title">Design Component Tokens in Figma</div>
+          <div class="task-meta">
+            <span class="tag tag-work">Work</span>
+            <span style="color: var(--text-muted);"><i class="fa-regular fa-clock"></i> 2d left</span>
+          </div>
+          <div class="task-actions">
+            <button class="action-btn" onclick="moveTask(this, 'inprogress')"><i class="fa-solid fa-arrow-right"></i> Start</button>
+            <button class="action-btn" onclick="deleteTask(this)" style="color: #f87171;"><i class="fa-solid fa-trash"></i></button>
+          </div>
+        </div>
+        <div class="task-card" data-id="2">
+          <div class="task-title">Revise Chefer User Flow Prototypes</div>
+          <div class="task-meta">
+            <span class="tag tag-urgent">Urgent</span>
+            <span style="color: var(--text-muted);"><i class="fa-regular fa-clock"></i> Today</span>
+          </div>
+          <div class="task-actions">
+            <button class="action-btn" onclick="moveTask(this, 'inprogress')"><i class="fa-solid fa-arrow-right"></i> Start</button>
+            <button class="action-btn" onclick="deleteTask(this)" style="color: #f87171;"><i class="fa-solid fa-trash"></i></button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Column 2: In Progress -->
+    <div class="column" id="col-inprogress">
+      <div class="column-header">
+        <span><i class="fa-solid fa-circle" style="color: var(--cyan); font-size: 0.6rem;"></i> In Progress</span>
+        <span class="col-badge" id="badge-inprogress">2</span>
+      </div>
+      <div class="task-list" id="list-inprogress">
+        <div class="task-card" data-id="3">
+          <div class="task-title">Implement FairShare Real-Time Balance Math</div>
+          <div class="task-meta">
+            <span class="tag tag-work">Work</span>
+            <span style="color: var(--text-muted);"><i class="fa-regular fa-clock"></i> Active</span>
+          </div>
+          <div class="task-actions">
+            <button class="action-btn" onclick="moveTask(this, 'done')"><i class="fa-solid fa-check"></i> Complete</button>
+            <button class="action-btn" onclick="deleteTask(this)" style="color: #f87171;"><i class="fa-solid fa-trash"></i></button>
+          </div>
+        </div>
+        <div class="task-card" data-id="4">
+          <div class="task-title">CSS Micro-interactions & Smooth Transitions</div>
+          <div class="task-meta">
+            <span class="tag tag-personal">Personal</span>
+            <span style="color: var(--text-muted);"><i class="fa-regular fa-clock"></i> Active</span>
+          </div>
+          <div class="task-actions">
+            <button class="action-btn" onclick="moveTask(this, 'done')"><i class="fa-solid fa-check"></i> Complete</button>
+            <button class="action-btn" onclick="deleteTask(this)" style="color: #f87171;"><i class="fa-solid fa-trash"></i></button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Column 3: Done -->
+    <div class="column" id="col-done">
+      <div class="column-header">
+        <span><i class="fa-solid fa-circle" style="color: var(--green); font-size: 0.6rem;"></i> Done</span>
+        <span class="col-badge" id="badge-done" style="color: var(--green);">2</span>
+      </div>
+      <div class="task-list" id="list-done">
+        <div class="task-card" data-id="5">
+          <div class="task-title" style="text-decoration: line-through; opacity: 0.7;">Setup Internship Project Repository</div>
+          <div class="task-meta">
+            <span class="tag tag-work">Work</span>
+            <span style="color: var(--green);"><i class="fa-solid fa-check-double"></i> Shipped</span>
+          </div>
+          <div class="task-actions">
+            <button class="action-btn" onclick="deleteTask(this)" style="color: #f87171;"><i class="fa-solid fa-trash"></i> Delete</button>
+          </div>
+        </div>
+        <div class="task-card" data-id="6">
+          <div class="task-title" style="text-decoration: line-through; opacity: 0.7;">Configure Responsive Viewport Breakpoints</div>
+          <div class="task-meta">
+            <span class="tag tag-work">Work</span>
+            <span style="color: var(--green);"><i class="fa-solid fa-check-double"></i> Shipped</span>
+          </div>
+          <div class="task-actions">
+            <button class="action-btn" onclick="deleteTask(this)" style="color: #f87171;"><i class="fa-solid fa-trash"></i> Delete</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function updateCounts() {
+      const backlogCount = document.querySelectorAll('#list-backlog .task-card').length;
+      const inprogCount = document.querySelectorAll('#list-inprogress .task-card').length;
+      const doneCount = document.querySelectorAll('#list-done .task-card').length;
+
+      document.getElementById('badge-backlog').innerText = backlogCount;
+      document.getElementById('badge-inprogress').innerText = inprogCount;
+      document.getElementById('badge-done').innerText = doneCount;
+
+      document.getElementById('totalTasksCount').innerText = backlogCount + inprogCount + doneCount;
+      document.getElementById('inProgCount').innerText = inprogCount;
+      document.getElementById('doneCount').innerText = doneCount;
+    }
+
+    function escapeHTML(str) {
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+
+    function handleAddTask(e) {
+      e.preventDefault();
+      const rawTitle = document.getElementById('newTaskTitle').value.trim();
+      const rawTag = document.getElementById('newTaskTag').value;
+      if (!rawTitle || rawTitle.length > 150) return;
+
+      // Strict tag whitelist validation
+      const allowedTags = ['Work', 'Urgent', 'Personal'];
+      const tag = allowedTags.includes(rawTag) ? rawTag : 'Work';
+      const cleanTitle = escapeHTML(rawTitle);
+
+      const tagClass = tag === 'Urgent' ? 'tag-urgent' : (tag === 'Personal' ? 'tag-personal' : 'tag-work');
+      
+      const card = document.createElement('div');
+      card.className = 'task-card';
+      card.innerHTML = `
+        <div class="task-title">${cleanTitle}</div>
+        <div class="task-meta">
+          <span class="tag ${tagClass}">${tag}</span>
+          <span style="color: var(--text-muted);"><i class="fa-regular fa-clock"></i> New</span>
+        </div>
+        <div class="task-actions">
+          <button class="action-btn" onclick="moveTask(this, 'inprogress')"><i class="fa-solid fa-arrow-right"></i> Start</button>
+          <button class="action-btn" onclick="deleteTask(this)" style="color: #f87171;"><i class="fa-solid fa-trash"></i></button>
+        </div>
+      `;
+
+      document.getElementById('list-backlog').prepend(card);
+      document.getElementById('newTaskTitle').value = '';
+      updateCounts();
+    }
+
+    function moveTask(btn, targetCol) {
+      const card = btn.closest('.task-card');
+      if (targetCol === 'inprogress') {
+        btn.parentElement.innerHTML = `
+          <button class="action-btn" onclick="moveTask(this, 'done')"><i class="fa-solid fa-check"></i> Complete</button>
+          <button class="action-btn" onclick="deleteTask(this)" style="color: #f87171;"><i class="fa-solid fa-trash"></i></button>
+        `;
+        document.getElementById('list-inprogress').prepend(card);
+      } else if (targetCol === 'done') {
+        const titleEl = card.querySelector('.task-title');
+        titleEl.style.textDecoration = 'line-through';
+        titleEl.style.opacity = '0.7';
+        btn.parentElement.innerHTML = `
+          <button class="action-btn" onclick="deleteTask(this)" style="color: #f87171;"><i class="fa-solid fa-trash"></i> Delete</button>
+        `;
+        document.getElementById('list-done').prepend(card);
+      }
+      updateCounts();
+    }
+
+    function deleteTask(btn) {
+      const card = btn.closest('.task-card');
+      card.remove();
+      updateCounts();
+    }
+  </script>
+</body>
+</html>
