@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nexus UI - Design System & Component Library</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --bg-dark: #080c14;
+      --card-bg: rgba(18, 25, 38, 0.85);
+      --card-border: rgba(255, 255, 255, 0.08);
+      --primary: #6366f1;
+      --cyan: #06b6d4;
+      --emerald: #10b981;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
+    body { background: var(--bg-dark); color: var(--text); padding: 1.5rem; min-height: 100vh; }
+    .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
+    .logo { display: flex; align-items: center; gap: 0.75rem; font-family: 'Outfit', sans-serif; font-size: 1.5rem; font-weight: 800; color: #fff; }
+    .logo-icon { width: 36px; height: 36px; background: linear-gradient(135deg, var(--primary), var(--cyan)); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 1rem; }
+    
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.25rem; }
+    .card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 16px; padding: 1.25rem; }
+    .card-title { font-size: 1rem; font-weight: 700; color: #fff; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; }
+    
+    /* Interactive Buttons Showcase */
+    .btn-row { display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: center; }
+    .nexus-btn-primary { background: linear-gradient(135deg, #6366f1, #8b5cf6); color: #fff; padding: 0.65rem 1.2rem; border-radius: 10px; border: none; font-weight: 700; cursor: pointer; transition: 0.25s; box-shadow: 0 4px 15px rgba(99, 102, 241, 0.35); }
+    .nexus-btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(99, 102, 241, 0.5); }
+    
+    .nexus-btn-glow { position: relative; background: #0f172a; color: #38bdf8; border: 1px solid #38bdf8; padding: 0.65rem 1.2rem; border-radius: 10px; font-weight: 700; cursor: pointer; transition: 0.25s; overflow: hidden; }
+    .nexus-btn-glow:hover { background: #38bdf8; color: #000; box-shadow: 0 0 20px #38bdf8; }
+
+    .nexus-btn-glass { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15); backdrop-filter: blur(10px); color: #fff; padding: 0.65rem 1.2rem; border-radius: 10px; font-weight: 600; cursor: pointer; transition: 0.2s; }
+    .nexus-btn-glass:hover { background: rgba(255,255,255,0.12); }
+
+    /* Interactive Switches */
+    .switch-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.75rem; }
+    .switch { position: relative; display: inline-block; width: 44px; height: 24px; }
+    .switch input { opacity: 0; width: 0; height: 0; }
+    .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #334155; transition: .3s; border-radius: 24px; }
+    .slider:before { position: absolute; content: ""; height: 18px; width: 18px; left: 3px; bottom: 3px; background-color: white; transition: .3s; border-radius: 50%; }
+    input:checked + .slider { background-color: var(--emerald); }
+    input:checked + .slider:before { transform: translateX(20px); }
+
+    /* Interactive Badges */
+    .badge { display: inline-flex; align-items: center; gap: 0.35rem; padding: 4px 10px; border-radius: 999px; font-size: 0.75rem; font-weight: 600; }
+    .badge-cyan { background: rgba(6, 182, 212, 0.15); color: #22d3ee; border: 1px solid rgba(6, 182, 212, 0.3); }
+    .badge-purple { background: rgba(139, 92, 246, 0.15); color: #c084fc; border: 1px solid rgba(139, 92, 246, 0.3); }
+    .badge-emerald { background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3); }
+
+    /* Code Preview Snippet */
+    .code-box { background: #030712; border: 1px solid rgba(255,255,255,0.06); border-radius: 10px; padding: 0.85rem; font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; color: #a5f3fc; overflow-x: auto; }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="logo">
+      <div class="logo-icon"><i class="fa-solid fa-shapes"></i></div>
+      <span>Nexus UI Design System</span>
+    </div>
+    <span class="badge badge-purple"><i class="fa-solid fa-code"></i> v2.4 Release</span>
+  </div>
+
+  <div class="grid">
+    <!-- Component: Buttons -->
+    <div class="card">
+      <div class="card-title"><i class="fa-solid fa-hand-pointer" style="color: var(--primary);"></i> Button States & Glows</div>
+      <div class="btn-row">
+        <button class="nexus-btn-primary"><i class="fa-solid fa-bolt"></i> Primary</button>
+        <button class="nexus-btn-glow"><i class="fa-solid fa-sun"></i> Neon Glow</button>
+        <button class="nexus-btn-glass"><i class="fa-solid fa-layer-group"></i> Glass</button>
+      </div>
+      <div style="margin-top: 1rem;" class="code-box">
+        &lt;button class="nexus-btn-glow"&gt;Neon Glow&lt;/button&gt;
+      </div>
+    </div>
+
+    <!-- Component: Toggles & Inputs -->
+    <div class="card">
+      <div class="card-title"><i class="fa-solid fa-sliders" style="color: var(--cyan);"></i> Micro-Switches & State</div>
+      <div class="switch-row">
+        <span style="font-size: 0.85rem;">Dark Mode Ambient</span>
+        <label class="switch"><input type="checkbox" checked><span class="slider"></span></label>
+      </div>
+      <div class="switch-row">
+        <span style="font-size: 0.85rem;">Haptic Motion Feedback</span>
+        <label class="switch"><input type="checkbox" checked><span class="slider"></span></label>
+      </div>
+      <div class="switch-row">
+        <span style="font-size: 0.85rem;">High Refresh Rate (120Hz)</span>
+        <label class="switch"><input type="checkbox"><span class="slider"></span></label>
+      </div>
+    </div>
+
+    <!-- Component: Badges & Chips -->
+    <div class="card">
+      <div class="card-title"><i class="fa-solid fa-tags" style="color: var(--emerald);"></i> Tokenized Badges</div>
+      <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+        <span class="badge badge-cyan"><i class="fa-solid fa-cube"></i> Three.js WebGL</span>
+        <span class="badge badge-purple"><i class="fa-brands fa-figma"></i> Figma Auto-Layout</span>
+        <span class="badge badge-emerald"><i class="fa-solid fa-shield-check"></i> WCAG AA Accessible</span>
+      </div>
+      <div style="margin-top: 1rem; font-size: 0.85rem; color: var(--text-muted);">
+        Crafted with strict contrast checks, fluid typography tokens, and responsive rem scaling.
+      </div>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,109 @@
+/* ==========================================================================
+   MULTI-LAYER PARALLAX & 3D DEPTH DESIGN SYSTEM
+   ========================================================================== */
+
+/* Perspective Wrapper */
+.parallax-viewport {
+  perspective: 1200px;
+  perspective-origin: 50% 50%;
+  transform-style: preserve-3d;
+}
+
+/* Parallax Depth Layer Elements */
+[data-parallax-depth] {
+  will-change: transform;
+  transform: translate3d(0, 0, 0);
+}
+
+/* 3D Interactive Tilt Cards */
+.tilt-card {
+  transform-style: preserve-3d;
+  transition: transform 0.15s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease;
+  will-change: transform;
+}
+
+.tilt-inner {
+  transform: translateZ(24px);
+}
+
+/* Editorial Floating Background Typography / Watermarks */
+.bg-watermark-text {
+  position: absolute;
+  top: 15%;
+  right: -5%;
+  font-family: var(--font-display);
+  font-size: clamp(8rem, 20vw, 18rem);
+  font-weight: 300;
+  color: var(--text-main);
+  opacity: 0.035;
+  pointer-events: none;
+  z-index: 1;
+  user-select: none;
+  line-height: 0.8;
+  white-space: nowrap;
+}
+
+[data-theme="dark"] .bg-watermark-text {
+  opacity: 0.025;
+}
+
+/* Section Depth Reveal */
+.depth-section {
+  opacity: 0;
+  transform: translateY(40px) translateZ(-40px);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.depth-section.is-visible {
+  opacity: 1;
+  transform: translateY(0) translateZ(0);
+}
+
+/* Stagger Children inside Depth Sections */
+.stagger-up > *:nth-child(1) { transition-delay: 0.05s; }
+.stagger-up > *:nth-child(2) { transition-delay: 0.12s; }
+.stagger-up > *:nth-child(3) { transition-delay: 0.19s; }
+.stagger-up > *:nth-child(4) { transition-delay: 0.26s; }
+
+/* Status Availability Glowing Beacon */
+@keyframes beaconPulse {
+  0% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 var(--status-emerald-pulse);
+  }
+  60% {
+    transform: scale(1.1);
+    box-shadow: 0 0 0 12px transparent;
+  }
+  100% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 transparent;
+  }
+}
+
+.status-dot {
+  width: 10px;
+  height: 10px;
+  background-color: var(--status-emerald);
+  border-radius: 50%;
+  display: inline-block;
+  animation: beaconPulse 2.5s infinite ease-in-out;
+}
+
+/* Reduce Motion Accessibility Rule */
+@media (prefers-reduced-motion: reduce) {
+  [data-parallax-depth],
+  .tilt-card,
+  .depth-section {
+    transform: none !important;
+    transition: none !important;
+    opacity: 1 !important;
+  }
+  .status-dot {
+    animation: none !important;
+  }
+  .bg-watermark-text {
+    display: none;
+  }
+}

@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FairShare - Smart Bill Splitter</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --bg-dark: #0b0f19;
+      --card-bg: rgba(22, 30, 49, 0.75);
+      --card-border: rgba(255, 255, 255, 0.08);
+      --accent: #10b981;
+      --accent-hover: #059669;
+      --cyan: #06b6d4;
+      --purple: #8b5cf6;
+      --text: #f3f4f6;
+      --text-muted: #94a3b8;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
+    body { background: var(--bg-dark); color: var(--text); padding: 1.5rem; min-height: 100vh; overflow-x: hidden; }
+    .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
+    .logo { display: flex; align-items: center; gap: 0.75rem; font-family: 'Outfit', sans-serif; font-size: 1.5rem; font-weight: 800; color: #fff; }
+    .logo-icon { width: 36px; height: 36px; background: linear-gradient(135deg, var(--accent), var(--cyan)); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: #000; font-weight: 900; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.25rem; }
+    .card { background: var(--card-bg); border: 1px solid var(--card-border); backdrop-filter: blur(12px); border-radius: 16px; padding: 1.25rem; transition: transform 0.2s, border-color 0.2s; }
+    .card:hover { border-color: rgba(16, 185, 129, 0.3); }
+    .balance-val { font-size: 2.25rem; font-weight: 800; color: var(--accent); margin: 0.5rem 0; font-family: 'Outfit', sans-serif; }
+    .stat-row { display: flex; justify-content: space-between; margin-top: 1rem; padding-top: 0.75rem; border-top: 1px solid var(--card-border); color: var(--text-muted); font-size: 0.875rem; }
+    .stat-row strong { color: #fff; }
+    .btn { background: var(--accent); color: #052e16; font-weight: 700; border: none; padding: 0.75rem 1.25rem; border-radius: 10px; cursor: pointer; display: inline-flex; align-items: center; gap: 0.5rem; transition: 0.2s; }
+    .btn:hover { background: #34d399; transform: translateY(-2px); }
+    .btn-secondary { background: rgba(255, 255, 255, 0.1); color: #fff; }
+    .btn-secondary:hover { background: rgba(255, 255, 255, 0.2); }
+    .form-group { margin-bottom: 1rem; }
+    .form-group label { display: block; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); margin-bottom: 0.35rem; }
+    .input-field { width: 100%; background: rgba(15, 23, 42, 0.8); border: 1px solid var(--card-border); padding: 0.75rem 1rem; border-radius: 8px; color: #fff; outline: none; font-size: 0.95rem; }
+    .input-field:focus { border-color: var(--cyan); }
+    .friend-list { list-style: none; display: flex; flex-direction: column; gap: 0.75rem; }
+    .friend-item { display: flex; align-items: center; justify-content: space-between; padding: 0.6rem 0.8rem; background: rgba(255, 255, 255, 0.03); border-radius: 10px; border: 1px solid var(--card-border); }
+    .friend-info { display: flex; align-items: center; gap: 0.75rem; }
+    .avatar { width: 34px; height: 34px; border-radius: 50%; background: linear-gradient(135deg, var(--purple), var(--cyan)); display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.85rem; color: #fff; }
+    .badge-pos { color: var(--accent); font-weight: 700; }
+    .badge-neg { color: #f87171; font-weight: 700; }
+    .activity-feed { display: flex; flex-direction: column; gap: 0.75rem; max-height: 260px; overflow-y: auto; }
+    .feed-item { display: flex; align-items: center; justify-content: space-between; padding: 0.75rem; border-radius: 10px; background: rgba(0, 0, 0, 0.2); border: 1px solid var(--card-border); font-size: 0.9rem; }
+    .chart-container { display: flex; align-items: center; justify-content: center; height: 150px; position: relative; }
+    .donut-svg { transform: rotate(-90deg); width: 130px; height: 130px; }
+    .donut-circle { fill: transparent; stroke-width: 16; stroke-dasharray: 283; stroke-dashoffset: 75; stroke: var(--accent); transition: stroke-dashoffset 0.6s ease; }
+    .donut-circle-2 { fill: transparent; stroke-width: 16; stroke-dasharray: 283; stroke-dashoffset: 190; stroke: var(--cyan); }
+    .donut-center { position: absolute; text-align: center; }
+    .toast { position: fixed; bottom: 1rem; right: 1rem; background: #10b981; color: #022c22; padding: 0.75rem 1.25rem; border-radius: 8px; font-weight: 700; opacity: 0; transform: translateY(10px); transition: 0.3s; pointer-events: none; z-index: 100; }
+    .toast.show { opacity: 1; transform: translateY(0); }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="logo">
+      <div class="logo-icon"><i class="fa-solid fa-scale-balanced"></i></div>
+      <span>FairShare</span>
+    </div>
+    <div style="display: flex; gap: 0.5rem;">
+      <button class="btn" onclick="openExpenseModal()"><i class="fa-solid fa-plus"></i> Split Bill</button>
+    </div>
+  </div>
+
+  <div class="grid">
+    <!-- Balance Card -->
+    <div class="card">
+      <span style="color: var(--text-muted); font-size: 0.85rem; text-transform: uppercase;">Total Net Balance</span>
+      <div class="balance-val" id="netBalance">+$145.50</div>
+      <p style="color: #6ee7b7; font-size: 0.85rem;"><i class="fa-solid fa-arrow-trend-up"></i> You are owed more than you owe!</p>
+      <div class="stat-row">
+        <span>Total Owed to You</span>
+        <strong id="owedToYou">$210.80</strong>
+      </div>
+      <div class="stat-row">
+        <span>You Owe Others</span>
+        <strong id="youOwe" style="color: #f87171;">$65.30</strong>
+      </div>
+    </div>
+
+    <!-- Spending Breakdown -->
+    <div class="card">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+        <span style="font-weight: 700;">Expense Breakdown</span>
+        <span style="font-size: 0.8rem; color: var(--cyan);">This Month</span>
+      </div>
+      <div class="chart-container">
+        <svg class="donut-svg" viewBox="0 0 100 100">
+          <circle cx="50" cy="50" r="45" stroke="rgba(255,255,255,0.05)" stroke-width="10" fill="none" />
+          <circle class="donut-circle" cx="50" cy="50" r="45" />
+          <circle class="donut-circle-2" cx="50" cy="50" r="45" />
+        </svg>
+        <div class="donut-center">
+          <div style="font-size: 1.25rem; font-weight: 800; font-family: 'Outfit';">$1,250</div>
+          <div style="font-size: 0.75rem; color: var(--text-muted);">Total Split</div>
+        </div>
+      </div>
+      <div style="display: flex; justify-content: space-around; font-size: 0.8rem; margin-top: 0.5rem;">
+        <span><i class="fa-solid fa-circle" style="color: var(--accent); font-size: 0.6rem;"></i> Rent (45%)</span>
+        <span><i class="fa-solid fa-circle" style="color: var(--cyan); font-size: 0.6rem;"></i> Dining (35%)</span>
+        <span><i class="fa-solid fa-circle" style="color: var(--purple); font-size: 0.6rem;"></i> Bills (20%)</span>
+      </div>
+    </div>
+
+    <!-- Friends & Balances -->
+    <div class="card">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+        <span style="font-weight: 700;">Friend Balances</span>
+        <button class="btn btn-secondary" style="padding: 0.35rem 0.7rem; font-size: 0.8rem;" onclick="settleAll()">Settle Up</button>
+      </div>
+      <ul class="friend-list" id="friendList">
+        <li class="friend-item">
+          <div class="friend-info">
+            <div class="avatar" style="background: linear-gradient(135deg, #ec4899, #f43f5e);">ML</div>
+            <div>
+              <div style="font-weight: 600;">Mia Lawson</div>
+              <div style="font-size: 0.75rem; color: var(--text-muted);">Shared 4 bills</div>
+            </div>
+          </div>
+          <span class="badge-pos">+$115.30</span>
+        </li>
+        <li class="friend-item">
+          <div class="friend-info">
+            <div class="avatar" style="background: linear-gradient(135deg, #3b82f6, #06b6d4);">BK</div>
+            <div>
+              <div style="font-weight: 600;">Ben Keller</div>
+              <div style="font-size: 0.75rem; color: var(--text-muted);">Shared 2 bills</div>
+            </div>
+          </div>
+          <span class="badge-neg">-$45.00</span>
+        </li>
+        <li class="friend-item">
+          <div class="friend-info">
+            <div class="avatar" style="background: linear-gradient(135deg, #10b981, #14b8a6);">CW</div>
+            <div>
+              <div style="font-weight: 600;">Chloe Wong</div>
+              <div style="font-size: 0.75rem; color: var(--text-muted);">Shared 5 bills</div>
+            </div>
+          </div>
+          <span class="badge-pos">+$95.50</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Recent Activity & Quick Split Form -->
+  <div class="grid" style="margin-top: 1.25rem;">
+    <div class="card">
+      <h3 style="margin-bottom: 1rem; font-size: 1.1rem; display: flex; align-items: center; gap: 0.5rem;">
+        <i class="fa-solid fa-calculator" style="color: var(--accent);"></i> Quick Add Expense
+      </h3>
+      <form id="expenseForm" onsubmit="handleAddExpense(event)">
+        <div class="form-group">
+          <label>Description</label>
+          <input type="text" id="expDesc" class="input-field" placeholder="e.g. Dinner @ The Oak" required />
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
+          <div class="form-group">
+            <label>Amount ($)</label>
+            <input type="number" step="0.01" id="expAmount" class="input-field" placeholder="84.50" required />
+          </div>
+          <div class="form-group">
+            <label>Split With</label>
+            <select id="expFriend" class="input-field">
+              <option value="Mia Lawson">Mia Lawson</option>
+              <option value="Ben Keller">Ben Keller</option>
+              <option value="Chloe Wong">Chloe Wong</option>
+              <option value="Dan Miller">Dan Miller</option>
+            </select>
+          </div>
+        </div>
+        <button type="submit" class="btn" style="width: 100%; justify-content: center; margin-top: 0.5rem;">
+          <i class="fa-solid fa-check"></i> Record & Split Bill
+        </button>
+      </form>
+    </div>
+
+    <div class="card">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+        <h3 style="font-size: 1.1rem; display: flex; align-items: center; gap: 0.5rem;">
+          <i class="fa-solid fa-clock-rotate-left" style="color: var(--cyan);"></i> Recent Splits
+        </h3>
+        <span style="font-size: 0.8rem; color: var(--text-muted);" id="feedCount">2 items</span>
+      </div>
+      <div class="activity-feed" id="activityFeed">
+        <div class="feed-item">
+          <div>
+            <strong style="color: #fff;">Weekend Groceries</strong>
+            <div style="font-size: 0.75rem; color: var(--text-muted);">Split with Mia & Chloe • 2 hrs ago</div>
+          </div>
+          <div style="text-align: right;">
+            <div style="font-weight: 700; color: var(--accent);">+$42.50</div>
+            <span style="font-size: 0.7rem; color: #6ee7b7; background: rgba(16,185,129,0.15); padding: 2px 6px; border-radius: 4px;">Settled</span>
+          </div>
+        </div>
+        <div class="feed-item">
+          <div>
+            <strong style="color: #fff;">Electric & WiFi Bill</strong>
+            <div style="font-size: 0.75rem; color: var(--text-muted);">Paid by Ben • Yesterday</div>
+          </div>
+          <div style="text-align: right;">
+            <div style="font-weight: 700; color: #f87171;">-$28.00</div>
+            <span style="font-size: 0.7rem; color: #fca5a5; background: rgba(248,113,113,0.15); padding: 2px 6px; border-radius: 4px;">Pending</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast" class="toast">Split saved successfully!</div>
+
+  <script>
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      toast.innerText = msg;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 2500);
+    }
+
+    function escapeHTML(str) {
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+
+    function handleAddExpense(e) {
+      e.preventDefault();
+      const rawDesc = document.getElementById('expDesc').value.trim();
+      const rawAmount = parseFloat(document.getElementById('expAmount').value);
+      const rawFriend = document.getElementById('expFriend').value;
+
+      // Strict validation
+      if (!rawDesc || rawDesc.length > 100) {
+        showToast("Invalid description length.");
+        return;
+      }
+
+      if (isNaN(rawAmount) || !Number.isFinite(rawAmount) || rawAmount <= 0 || rawAmount > 100000) {
+        showToast("Please enter a valid positive amount.");
+        return;
+      }
+
+      const allowedFriends = ['Mia Lawson', 'Ben Keller', 'Chloe Wong', 'Dan Miller'];
+      const friend = allowedFriends.includes(rawFriend) ? rawFriend : 'Friend';
+      const cleanDesc = escapeHTML(rawDesc);
+      const splitShare = (rawAmount / 2).toFixed(2);
+
+      const feed = document.getElementById('activityFeed');
+      const item = document.createElement('div');
+      item.className = 'feed-item';
+      item.innerHTML = `
+        <div>
+          <strong style="color: #fff;">${cleanDesc}</strong>
+          <div style="font-size: 0.75rem; color: var(--text-muted);">Split with ${escapeHTML(friend)} • Just now</div>
+        </div>
+        <div style="text-align: right;">
+          <div style="font-weight: 700; color: var(--accent);">+$${splitShare}</div>
+          <span style="font-size: 0.7rem; color: #6ee7b7; background: rgba(16,185,129,0.15); padding: 2px 6px; border-radius: 4px;">Active</span>
+        </div>
+      `;
+      feed.prepend(item);
+
+      const currentNet = 145.50 + parseFloat(splitShare);
+      document.getElementById('netBalance').innerText = `+$${currentNet.toFixed(2)}`;
+      
+      document.getElementById('expDesc').value = '';
+      document.getElementById('expAmount').value = '';
+      showToast(`Added $${rawAmount.toFixed(2)} split with ${friend}!`);
+    }
+
+    function settleAll() {
+      showToast("Settlement reminders sent to group!");
+    }
+
+    function openExpenseModal() {
+      document.getElementById('expDesc').focus();
+    }
+  </script>
+</body>
+</html>

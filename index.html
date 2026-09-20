@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- SEO & Primary Meta Tags -->
+  <title>Mitali Sonkiya — Frontend Developer | Creative Portfolio</title>
+  <meta name="description" content="Personal portfolio of Mitali Sonkiya, a Frontend Developer and BCA student based in Jaipur, India. Built with a premium 3D parallax design system, showcasing FairShare, Chefer, and To-Do List.">
+  <meta name="author" content="Mitali Sonkiya">
+  <meta name="theme-color" content="#F4F5F0">
+
+  <!-- OpenGraph / Social Meta Tags -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Mitali Sonkiya — Frontend Developer">
+  <meta property="og:description" content="Frontend Developer based in Jaipur, India. Turning everyday problems into clean, usable web tools.">
+  <meta property="og:url" content="https://github.com/mitalisonkiya">
+  <meta property="og:image" content="assets/mitali_logo.jpg">
+
+  <!-- Favicon & Touch Icons -->
+  <link rel="icon" type="image/jpeg" href="assets/mitali_logo.jpg">
+  <link rel="apple-touch-icon" href="assets/mitali_logo.jpg">
+
+  <!-- Google Fonts: Fraunces (Editorial Display) + Manrope (Body/UI) + JetBrains Mono (Technical Labels) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,300;1,9..144,400&family=JetBrains+Mono:wght@400;500;600&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="styles/variables.css">
+  <link rel="stylesheet" href="styles/main.css">
+  <link rel="stylesheet" href="styles/parallax.css">
+  <link rel="stylesheet" href="styles/animations.css">
+  <link rel="stylesheet" href="styles/components.css">
+  <link rel="stylesheet" href="styles/responsive.css">
+</head>
+<body class="parallax-viewport is-loading">
+  <!-- Luxury Editorial Preloader Animation -->
+  <aside id="preloader" class="preloader" aria-label="Loading Mitali Sonkiya Portfolio" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+    <div class="preloader-backdrop"></div>
+    <div class="preloader-grid"></div>
+
+    <div class="preloader-content">
+      <!-- Animated Logo Emblem with Glowing Halo Ring -->
+      <div class="preloader-logo-container">
+        <div class="preloader-avatar-halo" aria-hidden="true"></div>
+        <div class="preloader-logo-emblem">
+          <img src="assets/mitali_logo.jpg" alt="Mitali Sonkiya Logo" width="84" height="84">
+        </div>
+      </div>
+
+      <!-- Editorial Typography Branding -->
+      <div class="preloader-brand">
+        <div class="preloader-kicker">[ 26.9124° N, 75.7873° E · JAIPUR, INDIA ]</div>
+        <h2 class="preloader-title">
+          <span>Mitali</span>
+          <span class="shimmer-text">Sonkiya</span>
+        </h2>
+        <p class="preloader-subtitle">Creative Frontend Developer</p>
+      </div>
+
+      <!-- Modern Linear Progress Metric -->
+      <div class="preloader-progress-box">
+        <div class="preloader-track">
+          <div id="preloaderBar" class="preloader-fill"></div>
+        </div>
+        <div class="preloader-meta-row">
+          <span id="preloaderStatus" class="preloader-status">INITIALIZING SYSTEM...</span>
+          <span id="preloaderPercent" class="preloader-percent">00%</span>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Accessibility Skip Link -->
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <!-- Top Scroll Progress Bar -->
+  <div id="scrollProgress" class="scroll-progress-bar" aria-hidden="true"></div>
+
+  <!-- Ambient Dot-Grid Texture & WebGL 3D Background Canvas -->
+  <div class="bg-grid-plane"></div>
+  <div id="three-canvas-bg" aria-hidden="true"></div>
+
+  <!-- Smooth Minimal Cursor Dot (Desktop Only) -->
+  <div class="cursor-dot" aria-hidden="true"></div>
+
+  <!-- 1. Floating Glass Navigation -->
+  <header class="site-header">
+    <div class="container nav-wrap">
+      <!-- Navigation Brand Mark with Logo -->
+      <a href="#hero" class="nav-brand-wrap" aria-label="Mitali Sonkiya Home">
+        <div class="nav-logo-badge">
+          <img src="assets/mitali_logo.jpg" alt="Mitali Sonkiya Logo" width="36" height="36" loading="eager">
+        </div>
+        <span class="nav-brand-name">Mitali <span class="shimmer-text">Sonkiya</span></span>
+      </a>
+
+      <!-- Mobile Backdrop Overlay -->
+      <div id="navOverlay" class="nav-overlay" aria-hidden="true"></div>
+
+      <nav aria-label="Main Navigation">
+        <ul class="nav-menu" id="navMenu">
+          <li><a href="#about" class="nav-link">About</a></li>
+          <li><a href="#skills" class="nav-link">Skills</a></li>
+          <li><a href="#projects" class="nav-link">Projects</a></li>
+          <li><a href="#contact" class="nav-link">Contact</a></li>
+        </ul>
+      </nav>
+
+      <div class="nav-actions">
+        <!-- Live Status Tag -->
+        <span class="nav-status-tag">
+          <span class="status-dot"></span>
+          <span>Open to Roles</span>
+        </span>
+
+        <!-- Theme Toggle (Sun/Moon) -->
+        <button id="themeToggle" class="theme-toggle" aria-label="Switch to dark theme">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+        </button>
+
+        <!-- Mobile Menu Hamburger Button -->
+        <button id="mobileToggle" class="mobile-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Landmark -->
+  <main id="main-content">
+
+    <!-- 2. Hero Section (Editorial Multi-Layer Parallax & 3D Portrait Showcase) -->
+    <section id="hero" class="hero-section">
+      <div class="container hero-grid">
+        <!-- Left: Hero Headline & Actions -->
+        <div class="hero-main" data-parallax-depth="0.08">
+          <div class="hero-coords animate-hero delay-0">
+            <span>[ 26.9124° N, 75.7873° E · JAIPUR, INDIA ]</span>
+          </div>
+
+          <h1 class="hero-title animate-hero delay-1">
+            Mitali<br>
+            <span class="shimmer-text">Sonkiya</span>
+          </h1>
+
+          <p class="hero-intro animate-hero delay-2">
+            BCA student and frontend developer based in Jaipur, India. Building clean, usable tools that turn everyday problems into practical web experiences.
+          </p>
+
+          <div class="hero-actions animate-hero delay-3">
+            <a href="#projects" class="btn btn-primary">See my work</a>
+            <a href="#contact" class="btn btn-outline">Get in touch</a>
+          </div>
+        </div>
+
+        <!-- Right: 3D Tilt Portrait Showcase Card with Ambient Glow & Floating Badges -->
+        <div class="hero-portrait-stage animate-hero-card delay-2" data-parallax-depth="-0.1">
+          <!-- Ambient Soft Diffuse Backlight (No Circular Artifacts) -->
+          <div class="portrait-ambient-backlight" aria-hidden="true"></div>
+
+          <!-- Smooth Floating Levitation Wrapper -->
+          <div class="portrait-levitate-wrap">
+            <aside class="portrait-showcase-card tilt-card spotlight-card" aria-label="Mitali Sonkiya — Profile showcase">
+              <!-- Inner Frame with Portrait Photo & Holographic Sheen Overlay -->
+              <div class="portrait-inner-frame">
+                <!-- Sleek Frosted Glass Live Status Badge -->
+                <div class="photo-status-badge" aria-label="Status: Open to Roles">
+                  <span class="status-dot"></span>
+                  <span>Open to Roles</span>
+                </div>
+
+                <div class="sheen-overlay" aria-hidden="true"></div>
+                <img src="assets/mitali_sonkiya.jpg" alt="Mitali Sonkiya — Frontend Developer" width="400" height="460" loading="eager">
+              </div>
+
+              <!-- Card Bottom Meta Strip -->
+              <div class="portrait-card-footer">
+                <div class="portrait-meta-info">
+                  <div class="portrait-meta-name">Mitali Sonkiya</div>
+                  <div class="portrait-meta-tags">
+                    <span class="portrait-meta-tag"><span class="pill-icon">✨</span> Frontend Developer</span>
+                    <span class="portrait-meta-tag"><span class="pill-icon">📍</span> Jaipur, India</span>
+                  </div>
+                </div>
+                <div class="portrait-social-strip">
+                  <a href="https://github.com/mitalisonkiya" target="_blank" rel="noopener noreferrer" class="portrait-social-btn" aria-label="GitHub Profile">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+                  </a>
+                  <a href="https://www.linkedin.com/in/mitali-sonkiya-3a8bab247/" target="_blank" rel="noopener noreferrer" class="portrait-social-btn" aria-label="LinkedIn Profile">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="10" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+                  </a>
+                </div>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. About Section (Editorial Depth Split with Portrait Spotlight) -->
+    <section id="about" class="depth-section">
+      <!-- Decorative Parallax Watermark Typography -->
+      <div class="bg-watermark-text" data-parallax-depth="0.16" aria-hidden="true">CRAFT</div>
+
+      <div class="container">
+        <header class="section-header reveal-up">
+          <span class="section-kicker">About</span>
+          <h2 class="section-heading">Background &amp; <span class="shimmer-text">Philosophy</span></h2>
+        </header>
+
+        <div class="about-split-layout">
+          <!-- Left: Editorial Portrait Showcase -->
+          <div class="about-portrait-showcase reveal-left" data-parallax-depth="0.08">
+            <div class="about-portrait-card tilt-card spotlight-card">
+              <div class="about-corner-bracket bracket-tl" aria-hidden="true"></div>
+              <div class="about-corner-bracket bracket-tr" aria-hidden="true"></div>
+              <div class="about-corner-bracket bracket-bl" aria-hidden="true"></div>
+              <div class="about-corner-bracket bracket-br" aria-hidden="true"></div>
+
+              <div class="about-portrait-img-box">
+                <img src="assets/mitali_avatar.jpg" alt="Mitali Sonkiya portrait" width="340" height="400" loading="lazy">
+              </div>
+
+              <div class="about-portrait-caption">
+                <span>[ MITALI SONKIYA ]</span>
+                <span>JAIPUR, IN</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right: Philosophy, Bio & Facts -->
+          <div class="about-content">
+            <blockquote class="about-quote reveal-right">
+              "Likes turning everyday problems — splitting a bill, tracking tasks, giving a small business a website — into <em class="shimmer-text">clean, usable tools</em>."
+            </blockquote>
+
+            <p class="about-bio reveal-up">
+              BCA student at JECRC University, Jaipur, building toward full-stack development. Focused on creating responsive web experiences with thoughtful micro-interactions, solid accessibility, and clean architecture. Currently sharpening JavaScript and backend development skills.
+            </p>
+
+            <!-- 3D Interactive Tilt Fact Cards with Spotlight Effects -->
+            <div class="about-facts-grid reveal-stagger">
+              <div class="about-fact-card tilt-card spotlight-card">
+                <div class="tilt-inner">
+                  <span class="about-fact-label">Location</span>
+                  <span class="about-fact-val">Jaipur, India</span>
+                </div>
+              </div>
+              <div class="about-fact-card tilt-card spotlight-card">
+                <div class="tilt-inner">
+                  <span class="about-fact-label">Education</span>
+                  <span class="about-fact-val">BCA, JECRC University</span>
+                </div>
+              </div>
+              <div class="about-fact-card tilt-card spotlight-card">
+                <div class="tilt-inner">
+                  <span class="about-fact-label">Focus</span>
+                  <span class="about-fact-val">Frontend to Full-Stack</span>
+                </div>
+              </div>
+              <div class="about-fact-card tilt-card spotlight-card">
+                <div class="tilt-inner">
+                  <span class="about-fact-label">Available for</span>
+                  <span class="about-fact-val">Freelance &amp; Junior Roles</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. Skills Section (Layered Grid) -->
+    <section id="skills" class="depth-section">
+      <div class="container">
+        <header class="section-header reveal-up">
+          <span class="section-kicker">Capabilities</span>
+          <h2 class="section-heading">Core <span class="shimmer-text">Technologies</span></h2>
+        </header>
+
+        <div class="skills-grid-layout reveal-stagger">
+          <!-- Card 1: Core Technologies -->
+          <div class="skill-category-card tilt-card spotlight-card">
+            <div class="tilt-inner">
+              <h3 class="skill-category-title">Core Web Stack</h3>
+              <div class="skills-chips-wrap">
+                <span class="chip">HTML5</span>
+                <span class="chip">CSS3</span>
+                <span class="chip">JavaScript (ES6+)</span>
+                <span class="chip">Bootstrap</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 2: Design & Workflow -->
+          <div class="skill-category-card tilt-card spotlight-card">
+            <div class="tilt-inner">
+              <h3 class="skill-category-title">Workflow &amp; Tools</h3>
+              <div class="skills-chips-wrap">
+                <span class="chip">Git / GitHub</span>
+                <span class="chip">Responsive Web</span>
+                <span class="chip">WCAG Accessibility</span>
+                <span class="chip">UI Prototyping</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="skills-deepening-box reveal-up" data-parallax-depth="0.05">
+          Currently deepening: <strong>backend development and full-stack architecture</strong>.
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. Projects Section (Parallax Expandable Showcase) -->
+    <section id="projects" class="depth-section">
+      <!-- Decorative Parallax Watermark -->
+      <div class="bg-watermark-text" data-parallax-depth="-0.14" style="top: 25%; left: -5%;" aria-hidden="true">WORKS</div>
+
+      <div class="container">
+        <header class="section-header reveal-up">
+          <span class="section-kicker">Portfolio</span>
+          <h2 class="section-heading">Selected <span class="shimmer-text">Work</span></h2>
+        </header>
+
+        <div class="projects-list reveal-stagger" role="region" aria-label="Selected Projects Accordion">
+
+          <!-- Project 1: FairShare (Open by default) -->
+          <article class="project-item active">
+            <button class="project-header-btn" aria-expanded="true" aria-controls="project-drawer-1">
+              <span class="project-name">FairShare</span>
+              <span class="project-blurb">Splitwise-style expense splitter.</span>
+              <span class="project-chevron" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </span>
+            </button>
+
+            <div id="project-drawer-1" class="project-drawer">
+              <div class="project-drawer-inner">
+                <div class="project-content-body">
+                  <p class="project-desc">
+                    A cost-splitting app built end to end, frontend and backend. Enables groups of friends and roommates to easily calculate shared balances, track group expenditures, and settle debts without manual math.
+                  </p>
+
+                  <div class="project-tech-row">
+                    <span class="chip">HTML</span>
+                    <span class="chip">CSS</span>
+                    <span class="chip">JavaScript</span>
+                    <span class="chip">Backend JS</span>
+                  </div>
+
+                  <div class="project-actions">
+                    <a href="https://fairshare-tau.vercel.app/" target="_blank" rel="noopener noreferrer" class="project-link-live">
+                      <span>View live site</span>
+                      <span class="project-arrow-icon" aria-hidden="true">↗</span>
+                    </a>
+                    <a href="https://github.com/mitalisonkiya/FairShare" target="_blank" rel="noopener noreferrer" class="project-link-github">GitHub repository</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Project 2: Chefer -->
+          <article class="project-item">
+            <button class="project-header-btn" aria-expanded="false" aria-controls="project-drawer-2">
+              <span class="project-name">Chefer</span>
+              <span class="project-blurb">Built during my internship.</span>
+              <span class="project-chevron" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </span>
+            </button>
+
+            <div id="project-drawer-2" class="project-drawer">
+              <div class="project-drawer-inner">
+                <div class="project-content-body">
+                  <p class="project-desc">
+                    A responsive multi-page website with clean layout and consistent styling. Designed during my frontend internship, featuring culinary sections, responsive navigation, menu catalog, and chef showcases.
+                  </p>
+
+                  <div class="project-tech-row">
+                    <span class="chip">HTML</span>
+                    <span class="chip">CSS</span>
+                    <span class="chip">Bootstrap</span>
+                  </div>
+
+                  <div class="project-actions">
+                    <a href="https://mitalisonkiya.github.io/Chefer/" target="_blank" rel="noopener noreferrer" class="project-link-live">
+                      <span>View live site</span>
+                      <span class="project-arrow-icon" aria-hidden="true">↗</span>
+                    </a>
+                    <a href="https://github.com/mitalisonkiya/Chefer" target="_blank" rel="noopener noreferrer" class="project-link-github">GitHub repository</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Project 3: To-Do List -->
+          <article class="project-item">
+            <button class="project-header-btn" aria-expanded="false" aria-controls="project-drawer-3">
+              <span class="project-name">To-Do List</span>
+              <span class="project-blurb">A clean task tracker.</span>
+              <span class="project-chevron" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </span>
+            </button>
+
+            <div id="project-drawer-3" class="project-drawer">
+              <div class="project-drawer-inner">
+                <div class="project-content-body">
+                  <p class="project-desc">
+                    Add, complete, and clear tasks with no clutter. Focuses on minimal friction, responsive design, and intuitive interaction states for daily productivity.
+                  </p>
+
+                  <div class="project-tech-row">
+                    <span class="chip">HTML</span>
+                    <span class="chip">CSS</span>
+                    <span class="chip">JavaScript</span>
+                  </div>
+
+                  <div class="project-actions">
+                    <a href="https://mitalisonkiya.github.io/To-Do-List/" target="_blank" rel="noopener noreferrer" class="project-link-live">
+                      <span>View live site</span>
+                      <span class="project-arrow-icon" aria-hidden="true">↗</span>
+                    </a>
+                    <a href="https://github.com/mitalisonkiya/To-Do-List" target="_blank" rel="noopener noreferrer" class="project-link-github">GitHub repository</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. Contact Section (Editorial Agency Callout) -->
+    <section id="contact" class="depth-section">
+      <div class="container">
+        <header class="section-header reveal-up">
+          <span class="section-kicker">Get In Touch</span>
+          <h2 class="contact-headline">
+            Have a project in mind or an open role?<br>
+            <span class="shimmer-text">Let's connect.</span>
+          </h2>
+        </header>
+
+        <p class="contact-intro reveal-up">
+          I'm actively looking for junior/entry-level frontend roles and interesting freelance projects. If you'd like to collaborate or chat about an opportunity, feel free to reach out.
+        </p>
+
+        <div class="contact-actions reveal-stagger">
+          <a href="mailto:sonkiyamitali@gmail.com" class="btn btn-primary">Email me</a>
+          <a href="https://github.com/mitalisonkiya" target="_blank" rel="noopener noreferrer" class="btn btn-outline">GitHub</a>
+          <a href="https://www.linkedin.com/in/mitali-sonkiya-3a8bab247/" target="_blank" rel="noopener noreferrer" class="btn btn-outline">LinkedIn</a>
+        </div>
+
+        <div class="timezone-badge reveal-up" data-parallax-depth="0.04">
+          <span class="status-dot"></span>
+          <span>Based in Jaipur, India · IST (UTC+5:30)</span>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- 7. Footer -->
+  <footer class="site-footer">
+    <div class="container footer-wrap">
+      <div class="footer-brand-lockup">
+        <img src="assets/mitali_logo.jpg" alt="Mitali Sonkiya Logo" width="34" height="34" class="footer-logo-badge">
+        <span>Mitali Sonkiya — Jaipur, India</span>
+      </div>
+      <div>Built with HTML, CSS &amp; JavaScript</div>
+    </div>
+  </footer>
+
+  <!-- Three.js CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+  <!-- Application Scripts -->
+  <script src="js/preloader.js"></script>
+  <script src="js/three-scene.js"></script>
+  <script src="js/parallax.js"></script>
+  <script src="js/theme.js"></script>
+  <script src="js/projects.js"></script>
+  <script src="js/animations.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

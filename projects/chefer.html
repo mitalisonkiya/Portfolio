@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chefer - Culinary Hub & Recipe Assistant</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --bg-dark: #0f141c;
+      --card-bg: rgba(26, 34, 48, 0.85);
+      --card-border: rgba(255, 255, 255, 0.08);
+      --accent: #f59e0b;
+      --accent-coral: #ff6b6b;
+      --green: #10b981;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
+    body { background: var(--bg-dark); color: var(--text); padding: 1.5rem; min-height: 100vh; overflow-x: hidden; }
+    .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem; }
+    .logo { display: flex; align-items: center; gap: 0.75rem; font-family: 'Outfit', sans-serif; font-size: 1.5rem; font-weight: 800; color: #fff; }
+    .logo-icon { width: 36px; height: 36px; background: linear-gradient(135deg, var(--accent), var(--accent-coral)); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 1.1rem; }
+    .badge-intern { background: rgba(245, 158, 11, 0.15); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.3); padding: 0.25rem 0.6rem; border-radius: 999px; font-size: 0.75rem; font-weight: 700; }
+    
+    .tags-bar { display: flex; gap: 0.5rem; overflow-x: auto; padding-bottom: 0.5rem; margin-bottom: 1.25rem; }
+    .tag-btn { background: rgba(255,255,255,0.05); border: 1px solid var(--card-border); color: var(--text-muted); padding: 0.45rem 1rem; border-radius: 999px; font-size: 0.85rem; font-weight: 600; cursor: pointer; transition: 0.2s; white-space: nowrap; }
+    .tag-btn.active, .tag-btn:hover { background: var(--accent); color: #000; font-weight: 700; border-color: var(--accent); }
+    
+    .main-layout { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 1.25rem; }
+    @media(max-width: 800px) { .main-layout { grid-template-columns: 1fr; } }
+
+    .recipe-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; }
+    .recipe-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 14px; overflow: hidden; cursor: pointer; transition: transform 0.2s, border-color 0.2s; }
+    .recipe-card:hover { transform: translateY(-3px); border-color: var(--accent); }
+    .recipe-card.active { border-color: var(--accent); box-shadow: 0 0 15px rgba(245, 158, 11, 0.2); }
+    .recipe-img { height: 130px; background-size: cover; background-position: center; position: relative; }
+    .recipe-badge { position: absolute; top: 8px; right: 8px; background: rgba(0,0,0,0.7); backdrop-filter: blur(4px); padding: 2px 8px; border-radius: 6px; font-size: 0.75rem; color: #fbbf24; font-weight: 700; }
+    .recipe-body { padding: 0.85rem; }
+    .recipe-title { font-weight: 700; font-size: 0.95rem; margin-bottom: 0.35rem; color: #fff; }
+    .recipe-meta { display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--text-muted); }
+
+    .detail-panel { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 16px; padding: 1.25rem; }
+    .step-list { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; margin-top: 0.85rem; }
+    .step-item { display: flex; align-items: flex-start; gap: 0.75rem; font-size: 0.875rem; padding: 0.5rem 0.6rem; background: rgba(255,255,255,0.02); border-radius: 8px; }
+    .step-checkbox { margin-top: 3px; accent-color: var(--accent); cursor: pointer; width: 16px; height: 16px; }
+    
+    .timer-card { margin-top: 1.25rem; background: linear-gradient(135deg, rgba(245, 158, 11, 0.1), rgba(255, 107, 107, 0.1)); border: 1px solid rgba(245, 158, 11, 0.25); border-radius: 12px; padding: 1rem; display: flex; align-items: center; justify-content: space-between; }
+    .timer-display { font-family: 'Outfit', sans-serif; font-size: 1.75rem; font-weight: 800; color: #fbbf24; }
+    .timer-btn { background: var(--accent); color: #000; border: none; padding: 0.5rem 1rem; border-radius: 8px; font-weight: 700; cursor: pointer; transition: 0.2s; }
+    .timer-btn:hover { background: #fbbf24; }
+
+    .macro-row { display: flex; justify-content: space-between; margin-top: 1rem; padding: 0.75rem; background: rgba(0,0,0,0.25); border-radius: 10px; text-align: center; }
+    .macro-item span { display: block; font-size: 0.75rem; color: var(--text-muted); }
+    .macro-item strong { font-size: 1rem; color: #fff; }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="logo">
+      <div class="logo-icon"><i class="fa-solid fa-utensils"></i></div>
+      <span>Chefer</span>
+      <span class="badge-intern"><i class="fa-solid fa-code"></i> Internship Project</span>
+    </div>
+    <div style="font-size: 0.85rem; color: var(--text-muted);">
+      <i class="fa-solid fa-wand-magic-sparkles" style="color: var(--accent);"></i> AI Recipe Assistant & Cooking Mode
+    </div>
+  </div>
+
+  <div class="tags-bar">
+    <button class="tag-btn active" onclick="filterCategory(this, 'all')">All Recipes</button>
+    <button class="tag-btn" onclick="filterCategory(this, 'quick')">⚡ Quick (under 20m)</button>
+    <button class="tag-btn" onclick="filterCategory(this, 'protein')">💪 High Protein</button>
+    <button class="tag-btn" onclick="filterCategory(this, 'healthy')">🥗 Healthy Bowls</button>
+  </div>
+
+  <div class="main-layout">
+    <!-- Left: Recipe Grid -->
+    <div>
+      <h3 style="font-size: 1.05rem; margin-bottom: 0.75rem; color: #fff;">Featured Culinary Dishes</h3>
+      <div class="recipe-grid">
+        <!-- Dish 1 -->
+        <div class="recipe-card active" onclick="selectRecipe(0)">
+          <div class="recipe-img" style="background-image: url('https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400&auto=format&fit=crop&q=80');">
+            <span class="recipe-badge"><i class="fa-solid fa-star"></i> 4.9</span>
+          </div>
+          <div class="recipe-body">
+            <div class="recipe-title">Mediterranean Salmon & Asparagus</div>
+            <div class="recipe-meta">
+              <span><i class="fa-regular fa-clock"></i> 25 mins</span>
+              <span><i class="fa-solid fa-fire"></i> 540 kcal</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Dish 2 -->
+        <div class="recipe-card" onclick="selectRecipe(1)">
+          <div class="recipe-img" style="background-image: url('https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=400&auto=format&fit=crop&q=80');">
+            <span class="recipe-badge"><i class="fa-solid fa-star"></i> 4.8</span>
+          </div>
+          <div class="recipe-body">
+            <div class="recipe-title">Avocado Quinoa Protein Bowl</div>
+            <div class="recipe-meta">
+              <span><i class="fa-regular fa-clock"></i> 15 mins</span>
+              <span><i class="fa-solid fa-fire"></i> 420 kcal</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Dish 3 -->
+        <div class="recipe-card" onclick="selectRecipe(2)">
+          <div class="recipe-img" style="background-image: url('https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=400&auto=format&fit=crop&q=80');">
+            <span class="recipe-badge"><i class="fa-solid fa-star"></i> 4.7</span>
+          </div>
+          <div class="recipe-body">
+            <div class="recipe-title">Grilled Herb Chicken Steak</div>
+            <div class="recipe-meta">
+              <span><i class="fa-regular fa-clock"></i> 30 mins</span>
+              <span><i class="fa-solid fa-fire"></i> 580 kcal</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Nutritional Overview -->
+      <div class="macro-row">
+        <div class="macro-item">
+          <span>Calories</span>
+          <strong id="macroCal">540 kcal</strong>
+        </div>
+        <div class="macro-item">
+          <span>Protein</span>
+          <strong id="macroProtein" style="color: #60a5fa;">42g</strong>
+        </div>
+        <div class="macro-item">
+          <span>Carbs</span>
+          <strong id="macroCarbs" style="color: #f59e0b;">28g</strong>
+        </div>
+        <div class="macro-item">
+          <span>Healthy Fats</span>
+          <strong id="macroFats" style="color: #10b981;">22g</strong>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right: Cooking Mode & Step Checklist -->
+    <div class="detail-panel">
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <h3 id="currentRecipeTitle" style="font-size: 1.15rem; color: #fff; font-family: 'Outfit', sans-serif;">Mediterranean Salmon</h3>
+        <span style="font-size: 0.8rem; color: var(--accent);"><i class="fa-solid fa-kitchen-set"></i> Cooking Mode</span>
+      </div>
+
+      <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.35rem;" id="currentRecipeDesc">
+        Pan-seared Atlantic salmon fillet with seasoned lemon-herb asparagus and garlic cherry tomatoes.
+      </p>
+
+      <div class="timer-card">
+        <div>
+          <div style="font-size: 0.75rem; text-transform: uppercase; color: var(--text-muted);">Active Cook Timer</div>
+          <div class="timer-display" id="timerDisplay">25:00</div>
+        </div>
+        <div style="display: flex; gap: 0.4rem;">
+          <button class="timer-btn" id="timerToggleBtn" onclick="toggleTimer()"><i class="fa-solid fa-play"></i> Start</button>
+          <button class="timer-btn" style="background: rgba(255,255,255,0.1); color: #fff;" onclick="resetTimer()"><i class="fa-solid fa-rotate-right"></i></button>
+        </div>
+      </div>
+
+      <div style="margin-top: 1rem;">
+        <h4 style="font-size: 0.9rem; color: #fff; margin-bottom: 0.5rem;"><i class="fa-solid fa-list-check" style="color: var(--accent);"></i> Interactive Steps</h4>
+        <ul class="step-list" id="stepList">
+          <li class="step-item">
+            <input type="checkbox" class="step-checkbox" checked>
+            <span>Pat salmon dry and season both sides with sea salt, black pepper, and paprika.</span>
+          </li>
+          <li class="step-item">
+            <input type="checkbox" class="step-checkbox">
+            <span>Heat 1 tbsp olive oil in a skillet over medium-high heat.</span>
+          </li>
+          <li class="step-item">
+            <input type="checkbox" class="step-checkbox">
+            <span>Sear salmon skin-side down for 4 minutes until golden crisp.</span>
+          </li>
+          <li class="step-item">
+            <input type="checkbox" class="step-checkbox">
+            <span>Add asparagus and garlic butter; baste salmon for 3 additional minutes.</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const recipes = [
+      {
+        title: "Mediterranean Salmon & Asparagus",
+        desc: "Pan-seared Atlantic salmon fillet with seasoned lemon-herb asparagus and garlic cherry tomatoes.",
+        time: 25 * 60,
+        cal: "540 kcal",
+        protein: "42g",
+        carbs: "28g",
+        fats: "22g",
+        steps: [
+          "Pat salmon dry and season both sides with sea salt, black pepper, and paprika.",
+          "Heat 1 tbsp olive oil in a skillet over medium-high heat.",
+          "Sear salmon skin-side down for 4 minutes until golden crisp.",
+          "Add asparagus and garlic butter; baste salmon for 3 additional minutes."
+        ]
+      },
+      {
+        title: "Avocado Quinoa Protein Bowl",
+        desc: "Nutrient-dense warm quinoa bowl with sliced ripe avocado, roasted chickpeas, feta, and tahini drizzle.",
+        time: 15 * 60,
+        cal: "420 kcal",
+        protein: "22g",
+        carbs: "48g",
+        fats: "16g",
+        steps: [
+          "Rinse and boil quinoa in seasoned vegetable broth for 12 minutes.",
+          "Toss chickpeas with smoked paprika and roast in pan until crunchy.",
+          "Dice avocado, cucumber, and kalamata olives.",
+          "Assemble bowl and drizzle with lemon tahini vinaigrette."
+        ]
+      },
+      {
+        title: "Grilled Herb Chicken Steak",
+        desc: "Juicy marinated chicken breast with rosemary, thyme, garlic cloves, and steamed broccoli florets.",
+        time: 30 * 60,
+        cal: "580 kcal",
+        protein: "52g",
+        carbs: "14g",
+        fats: "18g",
+        steps: [
+          "Marinate chicken fillets in lemon juice, garlic, rosemary, and olive oil for 15 mins.",
+          "Preheat grill pan to high heat and sear chicken for 6 mins per side.",
+          "Steam fresh broccoli florets with sea salt and black pepper.",
+          "Rest meat for 3 minutes before carving into tender strips."
+        ]
+      }
+    ];
+
+    let currentRecipeIdx = 0;
+    let timerSec = 25 * 60;
+    let timerInterval = null;
+    let isTimerRunning = false;
+
+    function selectRecipe(idx) {
+      currentRecipeIdx = idx;
+      const r = recipes[idx];
+      document.getElementById('currentRecipeTitle').innerText = r.title;
+      document.getElementById('currentRecipeDesc').innerText = r.desc;
+      document.getElementById('macroCal').innerText = r.cal;
+      document.getElementById('macroProtein').innerText = r.protein;
+      document.getElementById('macroCarbs').innerText = r.carbs;
+      document.getElementById('macroFats').innerText = r.fats;
+
+      // Update steps
+      const stepList = document.getElementById('stepList');
+      stepList.innerHTML = r.steps.map(s => `
+        <li class="step-item">
+          <input type="checkbox" class="step-checkbox">
+          <span>${s}</span>
+        </li>
+      `).join('');
+
+      // Cards active state
+      const cards = document.querySelectorAll('.recipe-card');
+      cards.forEach((c, i) => c.classList.toggle('active', i === idx));
+
+      // Reset timer for new recipe
+      timerSec = r.time;
+      updateTimerDisplay();
+      if (isTimerRunning) toggleTimer();
+    }
+
+    function updateTimerDisplay() {
+      const mins = Math.floor(timerSec / 60).toString().padStart(2, '0');
+      const secs = (timerSec % 60).toString().padStart(2, '0');
+      document.getElementById('timerDisplay').innerText = `${mins}:${secs}`;
+    }
+
+    function toggleTimer() {
+      const btn = document.getElementById('timerToggleBtn');
+      if (isTimerRunning) {
+        clearInterval(timerInterval);
+        isTimerRunning = false;
+        btn.innerHTML = '<i class="fa-solid fa-play"></i> Resume';
+      } else {
+        isTimerRunning = true;
+        btn.innerHTML = '<i class="fa-solid fa-pause"></i> Pause';
+        timerInterval = setInterval(() => {
+          if (timerSec > 0) {
+            timerSec--;
+            updateTimerDisplay();
+          } else {
+            clearInterval(timerInterval);
+            isTimerRunning = false;
+            btn.innerHTML = '<i class="fa-solid fa-check"></i> Done!';
+          }
+        }, 1000);
+      }
+    }
+
+    function resetTimer() {
+      if (isTimerRunning) toggleTimer();
+      timerSec = recipes[currentRecipeIdx].time;
+      updateTimerDisplay();
+      document.getElementById('timerToggleBtn').innerHTML = '<i class="fa-solid fa-play"></i> Start';
+    }
+
+    function filterCategory(btn, cat) {
+      document.querySelectorAll('.tag-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    }
+  </script>
+</body>
+</html>
