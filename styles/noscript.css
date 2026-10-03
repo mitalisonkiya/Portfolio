@@ -1,0 +1,10 @@
+/* Stylesheet for browsers with JavaScript disabled */
+.page-loader {
+  display: none !important;
+}
+
+.hero-reveal-text {
+  opacity: 1 !important;
+  transform: none !important;
+  animation: none !important;
+}

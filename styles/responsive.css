@@ -1,0 +1,175 @@
+/* ==========================================================================
+   RESPONSIVE LAYOUT & MOBILE ADAPTATIONS
+   ========================================================================== */
+
+/* Tablets and small laptops (max-width: 992px) */
+@media (max-width: 992px) {
+  .hero-grid {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+
+  .hero-hanging-stage {
+    order: -1;
+    height: 440px;
+  }
+
+  .hanging-card {
+    width: 260px;
+  }
+
+  .project-card-body {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .project-img-box {
+    border-right: none;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  .project-content {
+    padding: 1.5rem;
+  }
+
+  .projects-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .project-card {
+    position: static;
+    top: auto;
+    max-width: 100%;
+    transform: none;
+  }
+
+  .skills-container {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+}
+
+/* Mobile Devices (max-width: 768px) */
+@media (max-width: 768px) {
+  .nav-menu {
+    position: fixed;
+    top: 72px;
+    left: 0;
+    width: 100%;
+    background-color: var(--bg-surface);
+    border-bottom: 1px solid var(--border-subtle);
+    box-shadow: var(--shadow-md);
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 1.5rem clamp(1.25rem, 5vw, 2.5rem);
+    gap: 1.25rem;
+    transform: translateY(-120%);
+    opacity: 0;
+    visibility: hidden;
+    transition: transform var(--transition-smooth), opacity var(--transition-smooth), visibility var(--transition-smooth);
+    z-index: 99;
+  }
+
+  .nav-menu.is-open {
+    transform: translateY(0);
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .nav-link {
+    font-size: 1.1rem;
+    width: 100%;
+    padding: 0.5rem 0;
+  }
+
+  .nav-resume-item {
+    width: 100%;
+    margin-left: 0;
+    padding-top: 0.5rem;
+  }
+
+  .nav-resume-btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .mobile-nav-toggle {
+    display: flex;
+  }
+
+  .hero-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .hero-actions .btn {
+    width: 100%;
+  }
+
+  .about-resume-box {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .about-resume-actions {
+    width: 100%;
+  }
+
+  .about-resume-actions .btn {
+    flex: 1;
+    min-width: 130px;
+  }
+
+  .contact-buttons {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .contact-buttons .btn {
+    width: 100%;
+  }
+
+  .footer-inner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+}
+
+/* Small Mobile Screens (max-width: 480px) */
+@media (max-width: 480px) {
+  .hero-name {
+    font-size: 2.65rem;
+  }
+
+  .hero-hanging-stage {
+    height: 400px;
+  }
+
+  .hanging-card {
+    width: 240px;
+    padding: 0.75rem;
+  }
+
+  .hanging-card-name {
+    font-size: 1.15rem;
+  }
+
+  .section-title {
+    font-size: 2rem;
+  }
+
+  .skills-card {
+    padding: 1.35rem;
+  }
+
+  .about-card {
+    padding: 1.5rem;
+  }
+
+  .about-bio-flow p {
+    font-size: 1.05rem;
+  }
+}

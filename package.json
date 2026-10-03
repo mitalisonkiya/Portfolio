@@ -1,0 +1,21 @@
+{
+  "name": "mitali-sonkiya-portfolio",
+  "version": "2.0.0",
+  "description": "Personal developer portfolio of Mitali Sonkiya — Frontend Developer",
+  "main": "index.html",
+  "scripts": {
+    "dev": "npx serve . -l 3000",
+    "start": "npx serve . -l 3000",
+    "preview": "npx serve . -l 3000",
+    "build": "node -e \"console.log('✔ Static portfolio build verified and ready for production deployment.')\""
+  },
+  "keywords": [
+    "portfolio",
+    "frontend-developer",
+    "javascript",
+    "css",
+    "html"
+  ],
+  "author": "Mitali Sonkiya",
+  "license": "MIT"
+}

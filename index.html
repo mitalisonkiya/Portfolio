@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- SEO & Primary Meta Tags -->
+  <title>Mitali Sonkiya — Frontend Developer</title>
+  <meta name="description"
+    content="Mitali Sonkiya is a frontend developer from Jaipur, learning full-stack. See her projects: Radhe Radhe, FairShare, Mino, Chefer.">
+  <meta name="author" content="Mitali Sonkiya">
+  <meta name="theme-color" content="#0B0D1A">
+
+  <!-- OpenGraph / Social Meta Tags -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Mitali Sonkiya — Frontend Developer">
+  <meta property="og:description"
+    content="Mitali Sonkiya is a frontend developer from Jaipur, learning full-stack. See her projects: Radhe Radhe, FairShare, Mino, Chefer.">
+  <meta property="og:image" content="assets/mitali_logo.webp">
+
+  <!-- Favicon & Touch Icons -->
+  <link rel="icon" type="image/webp" href="assets/mitali_logo.webp">
+  <link rel="apple-touch-icon" href="assets/mitali_logo.webp">
+
+  <!-- Google Fonts: Fraunces (Headings) & Manrope (Body) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Manrope:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="styles/variables.css">
+  <link rel="stylesheet" href="styles/main.css">
+  <link rel="stylesheet" href="styles/components.css">
+  <link rel="stylesheet" href="styles/animations.css">
+  <link rel="stylesheet" href="styles/responsive.css">
+
+  <!-- Fallback for Disabled JavaScript -->
+  <noscript>
+    <link rel="stylesheet" href="styles/noscript.css">
+  </noscript>
+</head>
+
+<body>
+  <!-- Ice Dome Page Loader (Gradient Hyoukyuu with 0 to 100% Counter) -->
+  <div class="page-loader gradient-hyoukyuu" id="pageLoader" role="status" aria-label="Loading site">
+    <div class="loader-content">
+      <div class="loader-monogram">MS</div>
+      <div class="loader-progress-track">
+        <div class="loader-progress-bar" id="loaderProgressBar"></div>
+      </div>
+      <div class="loader-percentage" id="loaderPercentage" aria-live="polite">0%</div>
+    </div>
+  </div>
+
+  <!-- 2px Ice-Blue Scroll Progress Bar -->
+  <div class="scroll-progress-bar" id="scrollProgressBar" aria-hidden="true"></div>
+
+  <!-- Delicate Jaipur Architectural Jali Pattern Overlay (3.5% Opacity) -->
+  <div class="jali-bg-overlay" aria-hidden="true"></div>
+
+  <!-- Ambient Cursor Spotlight (Desktop Only) -->
+  <div class="cursor-spotlight" id="cursorSpotlight" aria-hidden="true"></div>
+
+  <!-- Accessibility Skip Link -->
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <!-- Header Navigation -->
+  <header class="site-header">
+    <div class="container nav-wrap">
+      <a href="#hero" class="nav-brand" aria-label="Mitali Sonkiya Home">
+        <span class="nav-brand-mark" aria-hidden="true">M</span>
+        <span>Mitali Sonkiya</span>
+      </a>
+
+      <nav aria-label="Main Navigation">
+        <ul class="nav-menu">
+          <li><a href="#about" class="nav-link">About</a></li>
+          <li><a href="#skills" class="nav-link">Skills</a></li>
+          <li><a href="#projects" class="nav-link">Projects</a></li>
+          <li><a href="#contact" class="nav-link">Contact</a></li>
+          <li class="nav-resume-item">
+            <a href="resume.pdf" download="Mitali_Sonkiya_Resume.pdf" class="btn btn-sm btn-outline nav-resume-btn"
+              title="Download Mitali Sonkiya's Resume (PDF)">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                <polyline points="7 10 12 15 17 10" />
+                <line x1="12" y1="15" x2="12" y2="3" />
+              </svg>
+              <span>Resume</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+      <button class="mobile-nav-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <line x1="3" y1="12" x2="21" y2="12"></line>
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- Main Content Landmark -->
+  <main id="main-content">
+
+    <!-- 1. Hero Section -->
+    <section id="hero" class="section hero-section">
+      <div class="container hero-grid">
+        <!-- Left: Hero Headline & Actions -->
+        <div class="hero-content">
+          <div class="hero-reveal-line">
+            <h1 class="hero-reveal-text delay-1 hero-name">Mitali Sonkiya</h1>
+          </div>
+
+          <div class="hero-reveal-line">
+            <p class="hero-reveal-text delay-2 hero-headline">
+              I build websites, and I'm learning to build the backend behind them too.
+            </p>
+          </div>
+
+          <div class="hero-reveal-line">
+            <p class="hero-reveal-text delay-3 hero-subtitle">
+              BCA student in Jaipur. Open to junior roles and freelance work.
+            </p>
+          </div>
+
+          <div class="hero-reveal-line">
+            <div class="hero-reveal-text delay-4 hero-actions">
+              <a href="#projects" class="btn btn-primary">See my projects</a>
+              <a href="#contact" class="btn btn-outline">Contact me</a>
+              <a href="resume.pdf" download="Mitali_Sonkiya_Resume.pdf" class="btn btn-outline resume-hero-btn"
+                title="Download Resume (PDF)">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                  <polyline points="7 10 12 15 17 10" />
+                  <line x1="12" y1="15" x2="12" y2="3" />
+                </svg>
+                <span>Download Resume</span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Interactive Hanging Photo Card -->
+        <div class="hero-hanging-stage reveal-on-scroll stagger-2" id="hangingStage">
+          <!-- Top Hook / Pin Anchor -->
+          <div class="hanging-hook-anchor" id="hangingAnchor" aria-hidden="true">
+            <div class="hook-pin"></div>
+            <div class="hook-clip"></div>
+          </div>
+
+          <!-- Dynamic SVG String Layer -->
+          <svg class="hanging-string-svg" id="hangingStringSvg" aria-hidden="true">
+            <path id="hangingStringPath" d="" fill="none" stroke="var(--ice-blue)" stroke-width="1.75"
+              stroke-linecap="round" />
+          </svg>
+
+          <!-- Physical Hanging Card (3:4, rounded corners, soft light shadow) -->
+          <div class="hanging-card" id="hangingCard" role="region"
+            aria-label="Mitali Sonkiya — Interactive Hanging Photo Card" tabindex="0">
+            <!-- Top Grommet & Ring -->
+            <div class="card-grommet-ring" aria-hidden="true">
+              <div class="grommet-hole"></div>
+            </div>
+
+            <!-- Dynamic Glossy Light Sheen -->
+            <div class="card-gloss-sheen" id="cardSheen" aria-hidden="true"></div>
+
+            <!-- Inner Content -->
+            <div class="hanging-card-inner">
+              <div class="hanging-photo-frame">
+                <img src="assets/mitali_sonkiya.webp" alt="Mitali Sonkiya" width="300" height="400" loading="eager"
+                  draggable="false">
+              </div>
+
+              <div class="hanging-card-details">
+                <div class="hanging-card-name">Mitali Sonkiya</div>
+                <div class="hanging-card-title">Frontend Developer</div>
+                <div class="hanging-card-tag-row">
+                  <span class="hanging-status-tag">
+                    <span class="status-indicator-dot" aria-hidden="true"></span>
+                    <span>Open to work</span>
+                  </span>
+                  <span class="hanging-drag-hint" aria-hidden="true">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                      stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M5 9l-3 3 3 3M9 5l3-3 3 3M15 19l-3 3-3-3M19 9l3 3-3 3M2 12h20M12 2v20" />
+                    </svg>
+                    <span>drag me</span>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Subtle Jaipur Arch Section Divider -->
+    <div class="section-divider-wrap" aria-hidden="true">
+      <div class="jali-arch-divider"></div>
+    </div>
+
+    <!-- 2. About Section -->
+    <section id="about" class="section">
+      <div class="container">
+        <header class="section-header reveal-on-scroll">
+          <span class="section-kicker">About</span>
+          <h2 class="section-title">About <em>me</em></h2>
+        </header>
+
+        <div class="about-card reveal-on-scroll stagger-1">
+          <div class="about-bio-flow">
+            <p>
+              I'm a BCA student at JECRC University in Jaipur. I started with HTML and CSS, and I enjoy making things
+              look good and work smoothly on every screen.
+            </p>
+            <p>
+              Right now I'm learning backend development so I can build complete apps on my own.
+            </p>
+            <p>
+              I'm looking for a junior frontend role or freelance projects where I can keep learning.
+            </p>
+          </div>
+
+          <!-- Resume & CV Download Box -->
+          <div class="about-resume-box">
+            <div class="about-resume-info">
+              <div class="about-resume-icon" aria-hidden="true">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                  <polyline points="14 2 14 8 20 8" />
+                  <line x1="16" y1="13" x2="8" y2="13" />
+                  <line x1="16" y1="17" x2="8" y2="17" />
+                  <polyline points="10 9 9 9 8 9" />
+                </svg>
+              </div>
+              <div>
+                <div class="about-resume-title">Curriculum Vitae / Resume</div>
+                <div class="about-resume-desc">PDF format • Education, experience &amp; technical skill stack</div>
+              </div>
+            </div>
+            <div class="about-resume-actions">
+              <a href="resume.pdf" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-outline"
+                title="Open Resume in new tab">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                  <circle cx="12" cy="12" r="3" />
+                </svg>
+                <span>View</span>
+              </a>
+              <a href="resume.pdf" download="Mitali_Sonkiya_Resume.pdf" class="btn btn-sm btn-primary"
+                title="Download Resume PDF">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                  <polyline points="7 10 12 15 17 10" />
+                  <line x1="12" y1="15" x2="12" y2="3" />
+                </svg>
+                <span>Download PDF</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Subtle Jaipur Arch Section Divider -->
+    <div class="section-divider-wrap" aria-hidden="true">
+      <div class="jali-arch-divider"></div>
+    </div>
+
+    <!-- 3. Skills Section -->
+    <section id="skills" class="section">
+      <div class="container">
+        <header class="section-header reveal-on-scroll">
+          <span class="section-kicker">Skills</span>
+          <h2 class="section-title">Technical <em>skills</em></h2>
+        </header>
+
+        <div class="skills-container">
+          <!-- Card 1: Comfortable -->
+          <div class="skills-card reveal-on-scroll stagger-1">
+            <div class="skills-card-header">
+              <h3 class="skills-card-title">Comfortable</h3>
+            </div>
+            <div class="skills-tags">
+              <span class="skill-tag">HTML</span>
+              <span class="skill-tag">CSS</span>
+              <span class="skill-tag">JavaScript</span>
+              <span class="skill-tag">Bootstrap</span>
+              <span class="skill-tag">Git/GitHub</span>
+            </div>
+          </div>
+
+          <!-- Card 2: Learning -->
+          <div class="skills-card reveal-on-scroll stagger-2">
+            <div class="skills-card-header">
+              <h3 class="skills-card-title">Learning</h3>
+            </div>
+            <div class="skills-tags">
+              <span class="skill-tag">React</span>
+              <span class="skill-tag">Backend development</span>
+              <span class="skill-tag">Databases</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Infinite Skills Marquee (CSS only: HTML, CSS, JavaScript, Bootstrap, Git, React) -->
+        <div class="skills-marquee-wrap reveal-on-scroll stagger-3" aria-label="Skills Marquee Ticker">
+          <div class="skills-marquee-track">
+            <div class="skills-marquee-group">
+              <span class="marquee-item"><span class="marquee-dot" aria-hidden="true">✦</span> HTML</span>
+              <span class="marquee-item"><span class="marquee-dot" aria-hidden="true">✦</span> CSS</span>
+              <span class="marquee-item"><span class="marquee-dot" aria-hidden="true">✦</span> JavaScript</span>
+              <span class="marquee-item"><span class="marquee-dot" aria-hidden="true">✦</span> Bootstrap</span>
+              <span class="marquee-item"><span class="marquee-dot" aria-hidden="true">✦</span> Git</span>
+              <span class="marquee-item"><span class="marquee-dot" aria-hidden="true">✦</span> React</span>
+            </div>
+            <div class="skills-marquee-group" aria-hidden="true">
+              <span class="marquee-item"><span class="marquee-dot" aria-hidden="true">✦</span> HTML</span>
+              <span class="marquee-item"><span class="marquee-dot" aria-hidden="true">✦</span> CSS</span>
+              <span class="marquee-item"><span class="marquee-dot" aria-hidden="true">✦</span> JavaScript</span>
+              <span class="marquee-item"><span class="marquee-dot" aria-hidden="true">✦</span> Bootstrap</span>
+              <span class="marquee-item"><span class="marquee-dot" aria-hidden="true">✦</span> Git</span>
+              <span class="marquee-item"><span class="marquee-dot" aria-hidden="true">✦</span> React</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Subtle Jaipur Arch Section Divider -->
+    <div class="section-divider-wrap" aria-hidden="true">
+      <div class="jali-arch-divider"></div>
+    </div>
+
+    <!-- 4. Projects Section (Order: Radhe Radhe, FairShare, Mino, Chefer) -->
+    <section id="projects" class="section">
+      <div class="container">
+        <header class="section-header reveal-on-scroll">
+          <span class="section-kicker">Projects</span>
+          <h2 class="section-title">Featured <em>projects</em></h2>
+        </header>
+
+        <div class="projects-grid" id="projectsGrid">
+
+          <!-- Project 1: Radhe Radhe -->
+          <article class="project-card reveal-on-scroll stagger-1" data-index="0" style="--card-index: 0;">
+            <div class="browser-chrome">
+              <div class="browser-dots" aria-hidden="true">
+                <span class="browser-dot dot-red"></span>
+                <span class="browser-dot dot-yellow"></span>
+                <span class="browser-dot dot-green"></span>
+              </div>
+              <div class="browser-url">radhe-radhe-tau.vercel.app</div>
+            </div>
+
+            <div class="project-card-body">
+              <div class="project-img-box">
+                <img src="assets/project_radheradhe.webp" alt="Radhe Radhe gemstone and jewellery showcase" width="600"
+                  height="356" loading="lazy">
+              </div>
+
+              <div class="project-content">
+                <div class="project-header-row">
+                  <h3 class="project-title">Radhe Radhe</h3>
+                </div>
+
+                <p class="project-problem">
+                  A showcase website for a gemstone and jewellery business. As you scroll, each gemstone appears and the
+                  whole colour theme changes with it.
+                </p>
+
+                <div class="project-tech-tags">
+                  <span class="project-tag">React</span>
+                  <span class="project-tag">Bootstrap</span>
+                  <span class="project-tag">CSS animations</span>
+                </div>
+
+                <div class="project-learned">
+                  <strong>What I learned:</strong> Design and animation can make or break a website. A poor colour
+                  palette makes a site feel messy, so I learned to choose colours carefully and keep animations smooth.
+                </div>
+
+                <div class="project-links">
+                  <a href="https://radhe-radhe-tau.vercel.app/" target="_blank" rel="noopener noreferrer"
+                    class="btn btn-primary btn-sm project-link-primary">
+                    <span>View live site</span>
+                    <span aria-hidden="true">↗</span>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Project 2: FairShare -->
+          <article class="project-card reveal-on-scroll stagger-2" data-index="1" style="--card-index: 1;">
+            <div class="browser-chrome">
+              <div class="browser-dots" aria-hidden="true">
+                <span class="browser-dot dot-red"></span>
+                <span class="browser-dot dot-yellow"></span>
+                <span class="browser-dot dot-green"></span>
+              </div>
+              <div class="browser-url">fairshare-tau.vercel.app</div>
+            </div>
+
+            <div class="project-card-body">
+              <div class="project-img-box">
+                <img src="assets/project_fairshare.webp" alt="FairShare cost splitting app" width="600" height="356"
+                  loading="lazy">
+              </div>
+
+              <div class="project-content">
+                <div class="project-header-row">
+                  <h3 class="project-title">FairShare</h3>
+                </div>
+
+                <p class="project-problem">
+                  An app to split costs with friends and roommates and track who owes whom.
+                </p>
+
+                <div class="project-tech-tags">
+                  <span class="project-tag">HTML</span>
+                  <span class="project-tag">CSS</span>
+                  <span class="project-tag">JavaScript (frontend and backend)</span>
+                </div>
+
+                <div class="project-learned">
+                  <strong>What I learned:</strong> I built FairShare during college, using AI to help with the backend.
+                  Connecting the frontend and backend was hard for me as a student. I faced problems from colours to
+                  adding expenses, and solving them taught me how a full app works end to end.
+                </div>
+
+                <div class="project-links">
+                  <a href="https://fairshare-tau.vercel.app/" target="_blank" rel="noopener noreferrer"
+                    class="btn btn-primary btn-sm project-link-primary">
+                    <span>View live site</span>
+                    <span aria-hidden="true">↗</span>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Project 3: Mino -->
+          <article class="project-card reveal-on-scroll stagger-3" data-index="2" style="--card-index: 2;">
+            <div class="browser-chrome">
+              <div class="browser-dots" aria-hidden="true">
+                <span class="browser-dot dot-red"></span>
+                <span class="browser-dot dot-yellow"></span>
+                <span class="browser-dot dot-green"></span>
+              </div>
+              <div class="browser-url">mino-folio.netlify.app</div>
+            </div>
+
+            <div class="project-card-body">
+              <div class="project-img-box">
+                <img src="assets/project_mino.webp" alt="Mino to-do list and focus timer" width="600" height="356"
+                  loading="lazy">
+              </div>
+
+              <div class="project-content">
+                <div class="project-header-row">
+                  <h3 class="project-title">Mino</h3>
+                </div>
+
+                <p class="project-problem">
+                  A simple to-do list with a focus timer, daily notes and a weekly activity view. Tasks save on your
+                  device.
+                </p>
+
+                <div class="project-tech-tags">
+                  <span class="project-tag">HTML</span>
+                  <span class="project-tag">CSS</span>
+                  <span class="project-tag">JavaScript</span>
+                </div>
+
+                <div class="project-learned">
+                  <strong>What I learned:</strong> A simple to-do list can still look beautiful. I also learned that one
+                  small error can stop a whole website from working, so testing every feature matters.
+                </div>
+
+                <div class="project-links">
+                  <a href="https://mino-folio.netlify.app/" target="_blank" rel="noopener noreferrer"
+                    class="btn btn-primary btn-sm project-link-primary">
+                    <span>View live site</span>
+                    <span aria-hidden="true">↗</span>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Project 4: Chefer -->
+          <article class="project-card reveal-on-scroll stagger-4" data-index="3" style="--card-index: 3;">
+            <div class="browser-chrome">
+              <div class="browser-dots" aria-hidden="true">
+                <span class="browser-dot dot-red"></span>
+                <span class="browser-dot dot-yellow"></span>
+                <span class="browser-dot dot-green"></span>
+              </div>
+              <div class="browser-url">mitalisonkiya.github.io/Chefer</div>
+            </div>
+
+            <div class="project-card-body">
+              <div class="project-img-box">
+                <img src="assets/project_chefer.webp" alt="Chefer restaurant website" width="600" height="356"
+                  loading="lazy">
+              </div>
+
+              <div class="project-content">
+                <div class="project-header-row">
+                  <h3 class="project-title">Chefer</h3>
+                </div>
+
+                <p class="project-problem">
+                  A responsive website built during my first internship using HTML, CSS and Bootstrap.
+                </p>
+
+                <div class="project-tech-tags">
+                  <span class="project-tag">HTML</span>
+                  <span class="project-tag">CSS</span>
+                  <span class="project-tag">Bootstrap</span>
+                </div>
+
+                <div class="project-learned">
+                  <strong>What I learned:</strong> Chefer was my first internship website. It's where I learned to use
+                  Bootstrap and build responsive layouts.
+                </div>
+
+                <div class="project-links">
+                  <a href="https://mitalisonkiya.github.io/Chefer/" target="_blank" rel="noopener noreferrer"
+                    class="btn btn-primary btn-sm project-link-primary">
+                    <span>View live site</span>
+                    <span aria-hidden="true">↗</span>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Subtle Jaipur Arch Section Divider -->
+    <div class="section-divider-wrap" aria-hidden="true">
+      <div class="jali-arch-divider"></div>
+    </div>
+
+    <!-- 5. Contact Section -->
+    <section id="contact" class="section">
+      <div class="container container-narrow">
+        <div class="contact-card reveal-on-scroll">
+          <div class="contact-body">
+            <span class="section-kicker">Contact</span>
+            <h2 class="contact-title">Want to work together or have a role open?</h2>
+            <p class="contact-text">
+              Email me at <a href="mailto:sonkiyamitali@gmail.com"
+                class="contact-email-inline">sonkiyamitali@gmail.com</a>.
+            </p>
+            <div class="contact-buttons">
+              <a href="mailto:sonkiyamitali@gmail.com" class="btn btn-primary">Email me</a>
+              <a href="resume.pdf" download="Mitali_Sonkiya_Resume.pdf" class="btn btn-outline"
+                title="Download Resume (PDF)">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                  <polyline points="7 10 12 15 17 10" />
+                  <line x1="12" y1="15" x2="12" y2="3" />
+                </svg>
+                <span>Download Resume</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">Mitali Sonkiya — Jaipur, India</div>
+      <div>Built with HTML, CSS &amp; JavaScript</div>
+    </div>
+  </footer>
+
+  <!-- Application Scripts -->
+  <script src="js/main.js"></script>
+  <script src="js/hanging-card.js"></script>
+</body>
+
+</html>

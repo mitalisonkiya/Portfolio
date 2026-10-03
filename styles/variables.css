@@ -1,0 +1,64 @@
+/* ==========================================================================
+   DARK THEME DESIGN TOKENS & CSS CUSTOM PROPERTIES
+   Background: Deep indigo-navy (#0B0D1A)
+   Cards & Alternate Sections: Lighter indigo-navy (#12152B)
+   Text: Off-white (#EDEFF7) for headings, Muted blue-grey (#A3A9C4) for body
+   Accents: Ice-blue (#8FD3FF) for links/highlights, Soft coral (#FF8A6B) for buttons & 'Open to work' tag
+   ========================================================================== */
+
+:root {
+  /* Declare Dark Color Scheme for OS/Browser */
+  color-scheme: dark;
+
+  /* 1. Core Backgrounds & Surfaces */
+  --bg-page: #0B0D1A;                /* Deep indigo-navy */
+  --bg-surface: #12152B;             /* Cards and alternate sections */
+  --bg-surface-subtle: #181D38;      /* Inner containers / browser chrome */
+  --bg-surface-elevated: #1F2445;    /* Hover & elevated states */
+
+  /* 2. Text Colors (WCAG AA Compliant) */
+  --text-heading: #EDEFF7;           /* Off-white for headings */
+  --text-body: #A3A9C4;              /* Muted blue-grey for body */
+  --text-muted: #7E86A8;             /* Subtle tertiary text */
+  --text-inverse: #0B0D1A;           /* Inverted text for coral buttons */
+
+  /* 3. Accents */
+  --ice-blue: #8FD3FF;               /* Ice-blue for links and highlights */
+  --ice-blue-hover: #BCE4FF;         /* Lighter ice-blue on hover */
+  --ice-blue-border: rgba(143, 211, 255, 0.25);
+  --ice-blue-glow: rgba(143, 211, 255, 0.22);
+  --ice-blue-hero-glow: rgba(143, 211, 255, 0.08);
+
+  --coral-500: #FF8A6B;              /* Soft coral for buttons & 'Open to work' tag */
+  --coral-600: #F37654;              /* Coral hover */
+  --coral-700: #D95D3B;              /* Coral active */
+  --coral-border: rgba(255, 138, 107, 0.35);
+  --coral-glow: rgba(255, 138, 107, 0.22);
+
+  /* 4. Borders & Focus Rings */
+  --border-subtle: #1C203E;          /* Clean 1px navy border */
+  --border-medium: #2A305B;          /* Medium navy border */
+  --border-focus: #8FD3FF;           /* Clear ice-blue focus ring */
+
+  /* 5. Typography */
+  --font-serif: 'Fraunces', Georgia, serif;
+  --font-sans: 'Manrope', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+
+  /* 6. Dimensions & Radii */
+  --container-max: 1120px;
+  --container-narrow: 760px;
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-full: 9999px;
+
+  /* 7. Shadows */
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.35);
+  --shadow-md: 0 8px 24px -4px rgba(0, 0, 0, 0.45);
+  --shadow-lg: 0 16px 36px -6px rgba(0, 0, 0, 0.6);
+  --shadow-card-light: 0 10px 28px -4px rgba(0, 0, 0, 0.55), 0 0 16px rgba(143, 211, 255, 0.06);
+
+  /* 8. Transitions */
+  --transition-fast: 0.18s ease;
+  --transition-smooth: 0.32s cubic-bezier(0.16, 1, 0.3, 1);
+}
