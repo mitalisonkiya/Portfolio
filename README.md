@@ -2,7 +2,7 @@
 # Mitali Sonkiya | Portfolio
 My personal portfolio website. I am a frontend developer from Jaipur, open to work and freelance.
 
-**Live site:** https://mitalisonkiyaportfolio.netlify.app/
+**Live site:** (https://mitalisonkiyaportfolio.vercel.app/)
 
 ## Features
 
