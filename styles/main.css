@@ -55,7 +55,7 @@ html {
   transform: translate3d(-500px, -500px, 0);
 }
 
-@media (hover: none) or (pointer: coarse) {
+@media (hover: none), (pointer: coarse), not all and (hover: hover) and (pointer: fine) {
   .cursor-spotlight {
     display: none !important;
   }
@@ -70,9 +70,11 @@ body {
   /* One soft ice-blue glow behind hero */
   background-image: radial-gradient(ellipse 65% 45% at 70% 18%, var(--ice-blue-hero-glow), transparent 70%);
   background-attachment: fixed;
-  overflow-x: hidden;
+  overflow-x: clip;
   position: relative;
   min-height: 100vh;
+  min-height: 100svh;
+  min-height: 100dvh;
 }
 
 /* Faint Jaipur Jali Pattern Texture Overlay (3.5% opacity) */
