@@ -4,11 +4,11 @@
  * 0. Fast Kyokkou Gradient Page Loader (Northern Lights gradient, 120px bar, sessionStorage)
  * 1. Sticky Header Elevation
  * 2. Mobile Navigation Toggle
- * 3. Scroll Reveal Observer
+ * 3. Scroll Reveal Observer (Responsive rootMargin & threshold for phones & desktop)
  * 4. Scroll Progress Bar (2px ice-blue top bar)
- * 5. Cursor Spotlight (Desktop only, 60fps lerp, behind content)
- * 6. Stacked Project Cards (CSS sticky with scroll-linked scale down & dimming)
- * 7. Magnetic Buttons (8px cursor pull with spring easing, desktop only)
+ * 5. Cursor Spotlight (Desktop only with hover:hover & pointer:fine)
+ * 6. Stacked Project Cards (CSS sticky with desktop scale down & dimming)
+ * 7. Magnetic Buttons (8px cursor pull, desktop only with hover:hover & pointer:fine)
  * 8. Heading Text Scramble (600ms settling animation with screen reader accessibility)
  * Respects prefers-reduced-motion & mobile touch devices.
  */
@@ -72,7 +72,7 @@
       const elapsed = now - startTime;
       let rawProgress = Math.min(1, elapsed / targetDuration);
 
-      // Ease progress slightly for natural pacing (smooth acceleration then decelerating near 99%)
+      // Ease progress slightly for natural pacing
       const easedProgress = Math.min(1, Math.pow(rawProgress, 0.85));
       const currentPercent = Math.min(100, Math.floor(easedProgress * 100));
 
@@ -124,7 +124,7 @@
 })();
 
 document.addEventListener('DOMContentLoaded', () => {
-  const isTouchDevice = window.matchMedia('(hover: none) or (pointer: coarse)').matches;
+  const isPrecisePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   // 1. STICKY HEADER ELEVATION
@@ -156,7 +156,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // 3. SCROLL REVEAL OBSERVER
+  // 3. SCROLL REVEAL OBSERVER (Optimized threshold & rootMargin for phones & desktop)
   if (!prefersReducedMotion && 'IntersectionObserver' in window) {
     const revealElements = document.querySelectorAll('.reveal-on-scroll');
     const revealObserver = new IntersectionObserver((entries, observer) => {
@@ -167,8 +167,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       });
     }, {
-      rootMargin: '0px 0px -40px 0px',
-      threshold: 0.12
+      rootMargin: '0px 0px -4% 0px',
+      threshold: 0.05
     });
 
     revealElements.forEach(el => revealObserver.observe(el));
@@ -196,9 +196,9 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   initScrollProgress();
 
-  // 5. CURSOR SPOTLIGHT (Desktop Only)
+  // 5. CURSOR SPOTLIGHT (Desktop Only with fine pointer & hover)
   function initCursorSpotlight() {
-    if (isTouchDevice || prefersReducedMotion) return;
+    if (!isPrecisePointer || prefersReducedMotion) return;
 
     const spotlight = document.getElementById('cursorSpotlight');
     if (!spotlight) return;
@@ -229,15 +229,15 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   initCursorSpotlight();
 
-  // 6. STACKED PROJECT CARDS WITH SCALE & DIMMING (Desktop Only)
+  // 6. STACKED PROJECT CARDS WITH SCALE & DIMMING (Desktop 900px+ Only)
   function initStackedCards() {
-    if (isTouchDevice || prefersReducedMotion) return;
+    if (!isPrecisePointer || prefersReducedMotion) return;
 
     const cards = Array.from(document.querySelectorAll('.project-card'));
     if (cards.length === 0) return;
 
     function updateCardStack() {
-      if (window.innerWidth <= 992) {
+      if (window.innerWidth < 900) {
         cards.forEach(card => {
           card.style.transform = '';
           card.style.opacity = '';
@@ -288,9 +288,9 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   initStackedCards();
 
-  // 7. MAGNETIC BUTTONS (Desktop Only)
+  // 7. MAGNETIC BUTTONS (Desktop Only with fine pointer & hover)
   function initMagneticButtons() {
-    if (isTouchDevice || prefersReducedMotion) return;
+    if (!isPrecisePointer || prefersReducedMotion) return;
 
     const magneticBtns = document.querySelectorAll('.btn-primary');
 
