@@ -2,20 +2,71 @@
    RESPONSIVE LAYOUT & MOBILE ADAPTATIONS
    ========================================================================== */
 
-/* Tablets and small laptops (max-width: 992px) */
-@media (max-width: 992px) {
+/* 1. Screens narrower than 900px (Tablets & Mobile) */
+@media (max-width: 899px) {
+  /* Hero Single Column Flex Layout */
   .hero-grid {
-    grid-template-columns: 1fr;
-    gap: 3rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.75rem;
+    align-items: center;
   }
 
+  /* Reserved block ABOVE name & intro text, centered with ample reserved height */
   .hero-hanging-stage {
     order: -1;
-    height: 440px;
+    position: relative;
+    width: 100%;
+    max-width: 100%;
+    min-height: 480px;
+    height: 490px;
+    margin: 0 auto 1.5rem auto;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    overflow: visible;
   }
 
+  /* Hanging card scaled with clamp() */
   .hanging-card {
-    width: 260px;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: clamp(200px, 56vw, 260px);
+    max-width: 100%;
+    transform-origin: top center;
+  }
+
+  .hero-content {
+    width: 100%;
+    position: relative;
+    z-index: 2;
+    margin-top: 0;
+  }
+
+  /* Fast, responsive scroll-reveal animations on mobile (no 400ms delay) */
+  .reveal-on-scroll {
+    transition: opacity 0.32s ease-out, transform 0.32s ease-out;
+  }
+
+  .stagger-1, .stagger-2, .stagger-3, .stagger-4 {
+    transition-delay: 0s;
+  }
+
+  /* Stacked Project Cards with small peek offsets (72px, 86px, 100px, 114px) */
+  .projects-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    position: relative;
+  }
+
+  .project-card {
+    position: sticky;
+    top: calc(72px + var(--card-index, 0) * 14px);
+    max-width: 100%;
+    margin-bottom: 2rem;
+    transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
   }
 
   .project-card-body {
@@ -29,20 +80,7 @@
   }
 
   .project-content {
-    padding: 1.5rem;
-  }
-
-  .projects-grid {
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-  }
-
-  .project-card {
-    position: static;
-    top: auto;
-    max-width: 100%;
-    transform: none;
+    padding: clamp(1.25rem, 4vw, 1.75rem);
   }
 
   .skills-container {
@@ -51,11 +89,29 @@
   }
 }
 
-/* Mobile Devices (max-width: 768px) */
+/* 2. Mobile Devices (max-width: 768px) */
 @media (max-width: 768px) {
+  .site-header {
+    width: 100%;
+  }
+
+  .nav-wrap {
+    height: 64px;
+  }
+
+  .mobile-nav-toggle {
+    display: inline-flex;
+    width: 44px;
+    height: 44px;
+    min-width: 44px;
+    min-height: 44px;
+    align-items: center;
+    justify-content: center;
+  }
+
   .nav-menu {
     position: fixed;
-    top: 72px;
+    top: 64px;
     left: 0;
     width: 100%;
     background-color: var(--bg-surface);
@@ -63,8 +119,8 @@
     box-shadow: var(--shadow-md);
     flex-direction: column;
     align-items: flex-start;
-    padding: 1.5rem clamp(1.25rem, 5vw, 2.5rem);
-    gap: 1.25rem;
+    padding: 1.25rem clamp(1.25rem, 5vw, 2.5rem);
+    gap: 0.75rem;
     transform: translateY(-120%);
     opacity: 0;
     visibility: hidden;
@@ -78,10 +134,18 @@
     visibility: visible;
   }
 
-  .nav-link {
-    font-size: 1.1rem;
+  .nav-menu li {
     width: 100%;
-    padding: 0.5rem 0;
+  }
+
+  .nav-link {
+    font-size: 1.05rem;
+    width: 100%;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 0.75rem;
+    border-radius: var(--radius-sm);
   }
 
   .nav-resume-item {
@@ -92,69 +156,90 @@
 
   .nav-resume-btn {
     width: 100%;
+    min-height: 44px;
     justify-content: center;
-  }
-
-  .mobile-nav-toggle {
-    display: flex;
   }
 
   .hero-actions {
     flex-direction: column;
     align-items: stretch;
+    gap: 0.75rem;
   }
 
   .hero-actions .btn {
     width: 100%;
+    min-height: 44px;
   }
 
   .about-resume-box {
     flex-direction: column;
     align-items: stretch;
+    gap: 1.25rem;
   }
 
   .about-resume-actions {
     width: 100%;
+    flex-direction: column;
+    gap: 0.65rem;
   }
 
   .about-resume-actions .btn {
-    flex: 1;
-    min-width: 130px;
+    width: 100%;
+    min-height: 44px;
   }
 
   .contact-buttons {
     flex-direction: column;
     width: 100%;
+    gap: 0.75rem;
   }
 
   .contact-buttons .btn {
     width: 100%;
+    min-height: 44px;
   }
 
   .footer-inner {
     flex-direction: column;
-    align-items: flex-start;
-    gap: 1rem;
+    align-items: center;
+    text-align: center;
+    gap: 0.75rem;
   }
 }
 
-/* Small Mobile Screens (max-width: 480px) */
+/* 3. Small Mobile Screens (max-width: 480px) */
 @media (max-width: 480px) {
   .hero-name {
-    font-size: 2.65rem;
+    font-size: clamp(2.2rem, 9.5vw, 2.75rem);
+    word-break: break-word;
   }
 
+  .hero-headline {
+    font-size: 1.15rem;
+  }
+
+  .hero-subtitle {
+    font-size: 0.98rem;
+  }
+
+  /* Reserved block for phones with ~360px card height */
   .hero-hanging-stage {
-    height: 400px;
+    min-height: 410px;
+    height: 420px;
+    margin-bottom: 1.25rem;
   }
 
   .hanging-card {
-    width: 240px;
-    padding: 0.75rem;
+    width: clamp(200px, 64vw, 240px);
+    padding: 0.65rem;
   }
 
   .hanging-card-name {
     font-size: 1.15rem;
+  }
+
+  .hanging-card-title {
+    font-size: 0.82rem;
   }
 
   .section-title {
@@ -171,5 +256,76 @@
 
   .about-bio-flow p {
     font-size: 1.05rem;
+  }
+
+  .contact-card {
+    padding: 1.75rem 1.25rem;
+  }
+
+  .contact-title {
+    font-size: 1.75rem;
+  }
+
+  .contact-text {
+    font-size: 1.05rem;
+  }
+
+  .browser-url {
+    font-size: 0.75rem;
+    padding: 0.2rem 0.5rem;
+    max-width: 170px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+
+/* 4. Extra Small Screens (max-width: 359px) */
+@media (max-width: 359px) {
+  .container {
+    padding-left: 0.85rem;
+    padding-right: 0.85rem;
+  }
+
+  .hero-name {
+    font-size: 1.95rem;
+  }
+
+  /* Reserved block for ultra-small screens */
+  .hero-hanging-stage {
+    min-height: 390px;
+    height: 400px;
+    margin-bottom: 1rem;
+  }
+
+  .hanging-card {
+    width: 200px;
+    padding: 0.55rem;
+  }
+
+  .hanging-card-name {
+    font-size: 1.05rem;
+  }
+
+  .hanging-card-title {
+    font-size: 0.78rem;
+  }
+
+  .browser-url {
+    max-width: 130px;
+  }
+
+  .browser-chrome {
+    padding: 0.5rem 0.75rem;
+    gap: 0.5rem;
+  }
+
+  .skills-tags {
+    gap: 0.45rem;
+  }
+
+  .skill-tag {
+    font-size: 0.82rem;
+    padding: 0.35rem 0.65rem;
   }
 }
