@@ -3,6 +3,7 @@
  * Natural pendulum & spring physics with drop-in bounce, interactive drag-and-release,
  * keyboard nudge navigation, dynamic SVG string bending, and tab-aware idle sway.
  * 60fps vanilla JavaScript using transform + requestAnimationFrame only.
+ * Boundary-constrained and responsive across mobile, tablet and desktop viewports.
  */
 
 (function () {
@@ -15,24 +16,40 @@
 
     if (!stage || !anchor || !card || !stringPath) return;
 
+    // Geometry & Breakpoint Scaling
+    function getNaturalLength() {
+      const w = window.innerWidth;
+      if (w <= 480) return 36;
+      if (w < 900) return 46;
+      return 110;
+    }
+
+    function getMaxAngle() {
+      const w = window.innerWidth;
+      if (w <= 480) return 0.30; // ~17 deg
+      if (w < 900) return 0.40;  // ~23 deg
+      return 1.15;               // ~66 deg
+    }
+
     // Respect prefers-reduced-motion
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (prefersReducedMotion) {
-      card.style.transform = 'translate3d(-50%, 100px, 0) rotate(0deg)';
-      updateString(0, 100);
+      const initLen = getNaturalLength();
+      card.style.transform = `translate3d(-50%, ${initLen}px, 0) rotate(0deg)`;
+      updateString(0, initLen);
       return;
     }
 
-    // Geometry & Scaling
-    let naturalLength = window.innerWidth <= 768 ? 85 : 110;
+    let naturalLength = getNaturalLength();
     let currentLength = naturalLength;
+    let isSmallScreen = window.innerWidth < 900;
 
     // Physics State
-    // Initial drop from above
-    let angle = 0.32;
-    let angularVelocity = -0.08;
-    let dropY = -300;
-    let dropVelocity = 160;
+    // Initial drop from above scaled to viewport
+    let angle = isSmallScreen ? 0.08 : 0.32;
+    let angularVelocity = isSmallScreen ? -0.02 : -0.08;
+    let dropY = isSmallScreen ? -40 : -300;
+    let dropVelocity = isSmallScreen ? 40 : 160;
 
     const gravity = 920;
     const angularDamping = 1.45;
@@ -49,9 +66,26 @@
     let lastTime = performance.now();
     let idleTimer = 0;
 
-    // Handle Window Resize
-    window.addEventListener('resize', () => {
-      naturalLength = window.innerWidth <= 768 ? 85 : 110;
+    // Handle Window Resize and Orientation Change
+    function handleDimensionsChange() {
+      naturalLength = getNaturalLength();
+      isSmallScreen = window.innerWidth < 900;
+      const maxAngle = getMaxAngle();
+
+      if (!isDragging) {
+        if (Math.abs(angle) > maxAngle) {
+          angle = Math.sign(angle) * maxAngle;
+          angularVelocity = 0;
+        }
+        currentLength = naturalLength;
+        dropY = 0;
+        dropVelocity = 0;
+      }
+    }
+
+    window.addEventListener('resize', handleDimensionsChange, { passive: true });
+    window.addEventListener('orientationchange', () => {
+      setTimeout(handleDimensionsChange, 120);
     }, { passive: true });
 
     // Handle Tab Visibility
@@ -140,11 +174,14 @@
       const dx = targetCardX - ax;
       const dy = targetCardY - ay;
 
+      const maxAngle = getMaxAngle();
       let targetAngle = Math.atan2(dx, dy);
-      targetAngle = Math.max(-1.3, Math.min(1.3, targetAngle));
+      targetAngle = Math.max(-maxAngle, Math.min(maxAngle, targetAngle));
 
       const rawDist = Math.hypot(dx, dy);
-      const clampedDist = Math.max(naturalLength * 0.7, Math.min(naturalLength * 1.6, rawDist));
+      const maxDist = isSmallScreen ? naturalLength * 1.2 : naturalLength * 1.6;
+      const minDist = isSmallScreen ? naturalLength * 0.9 : naturalLength * 0.7;
+      const clampedDist = Math.max(minDist, Math.min(maxDist, rawDist));
 
       angle = targetAngle;
       currentLength = clampedDist;
@@ -167,9 +204,10 @@
       }
       dragPointerId = null;
 
-      // Project momentum into angular velocity
+      // Project momentum into angular velocity with boundary limits
+      const maxVel = isSmallScreen ? 5 : 14;
       const projectedVelocity = (pointerVelocity.vx * Math.cos(angle) - pointerVelocity.vy * Math.sin(angle)) / naturalLength;
-      angularVelocity = Math.max(-14, Math.min(14, projectedVelocity * 0.85));
+      angularVelocity = Math.max(-maxVel, Math.min(maxVel, projectedVelocity * 0.85));
 
       dropVelocity = (currentLength - naturalLength) * 8;
       dropY = currentLength - naturalLength;
@@ -184,17 +222,18 @@
 
     // Keyboard Accessibility (Nudge swing with Arrow keys)
     card.addEventListener('keydown', (e) => {
+      const maxAngle = getMaxAngle();
       if (e.key === 'ArrowLeft') {
-        angularVelocity -= 2.2;
+        angularVelocity = Math.max(-6, angularVelocity - 2.0);
         idleTimer = 0;
         e.preventDefault();
       } else if (e.key === 'ArrowRight') {
-        angularVelocity += 2.2;
+        angularVelocity = Math.min(6, angularVelocity + 2.0);
         idleTimer = 0;
         e.preventDefault();
       } else if (e.key === ' ' || e.key === 'Enter') {
-        dropVelocity += 60;
-        angularVelocity += (Math.random() > 0.5 ? 1.8 : -1.8);
+        dropVelocity += isSmallScreen ? 25 : 60;
+        angularVelocity += (Math.random() > 0.5 ? 1.2 : -1.2);
         idleTimer = 0;
         e.preventDefault();
       }
@@ -207,6 +246,7 @@
       const deltaMs = Math.min(timestamp - lastTime, 40);
       const dt = deltaMs / 1000;
       lastTime = timestamp;
+      const maxAngle = getMaxAngle();
 
       if (!isDragging) {
         idleTimer += dt;
@@ -231,10 +271,17 @@
         angularVelocity += angularAccel * dt;
         angle += angularVelocity * dt;
 
-        // 3. Ambient Idle Sway when settled
+        // 3. Boundary containment (never swings past max bounds)
+        if (Math.abs(angle) > maxAngle) {
+          angle = Math.sign(angle) * maxAngle;
+          angularVelocity = -angularVelocity * 0.35; // Soft boundary damping
+        }
+
+        // 4. Ambient Idle Sway when settled
         const isSettled = Math.abs(angle) < 0.015 && Math.abs(angularVelocity) < 0.02 && Math.abs(dropY) < 0.5;
         if (isSettled) {
-          const ambientSway = 0.022 * Math.sin(idleTimer * 1.3) + 0.008 * Math.sin(idleTimer * 2.6);
+          const swayAmp = isSmallScreen ? 0.012 : 0.022;
+          const ambientSway = swayAmp * Math.sin(idleTimer * 1.3) + (swayAmp * 0.35) * Math.sin(idleTimer * 2.6);
           angle = ambientSway;
         }
       }
