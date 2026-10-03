@@ -205,12 +205,15 @@
   background: var(--bg-surface);
   border: 1px solid var(--border-subtle);
   color: var(--text-heading);
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  min-height: 44px;
   border-radius: var(--radius-sm);
   cursor: pointer;
   align-items: center;
   justify-content: center;
+  padding: 10px;
 }
 
 /* 2. BUTTONS & CTAS */
@@ -223,6 +226,8 @@
   font-size: 0.95rem;
   font-weight: 600;
   padding: 0.75rem 1.6rem;
+  min-height: 44px;
+  min-width: 44px;
   border-radius: var(--radius-sm);
   text-decoration: none;
   cursor: pointer;
@@ -264,6 +269,7 @@
 .btn-sm {
   padding: 0.55rem 1.15rem;
   font-size: 0.88rem;
+  min-height: 44px;
   border-radius: var(--radius-sm);
 }
 
